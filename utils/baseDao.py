@@ -1,5 +1,4 @@
 from typing import TypeVar, Generic, Type
-
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -34,6 +33,18 @@ class BaseDAO(Generic[T]):
 
     def find_by_name(self, obj_name: str) -> T:
         stmt = select(self.model).where(self.model.name == obj_name)
+        return self.database.scalar(stmt)
+
+    def find_by_phone(self, obj_phone: str) -> T:
+        stmt = select(self.model).where(self.model.phone == obj_phone)
+        return self.database.scalar(stmt)
+
+    def find_by_email(self, obj_email: str) -> T:
+        stmt = select(self.model).where(self.model.email == obj_email)
+        return self.database.scalar(stmt)
+
+    def find_by_website(self, obj_website: str) -> T:
+        stmt = select(self.model).where(self.model.website == obj_website)
         return self.database.scalar(stmt)
 
     def delete(self, obj: T) -> None:
