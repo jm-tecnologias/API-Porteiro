@@ -47,6 +47,22 @@ class BaseDAO(Generic[T]):
         stmt = select(self.model).where(self.model.website == obj_website)
         return self.database.scalar(stmt)
 
+    def find_by_province(self, obj_province: str) -> T:
+        stmt = select(self.model).where(self.model.province == obj_province)
+        return self.database.scalar(stmt)
+
+    def find_by_city(self, obj_city: str) -> T:
+        stmt = select(self.model).where(self.model.city == obj_city)
+        return self.database.scalar(stmt)
+
+    def find_by_avenue(self, obj_avenue: str) -> T:
+        stmt = select(self.model).where(self.model.avenue == obj_avenue)
+        return self.database.scalar(stmt)
+
+    def find_by_number(self, obj_number: int) -> T:
+        stmt = select(self.model).where(self.model.number == obj_number)
+        return self.database.scalar(stmt)
+
     def delete(self, obj: T) -> None:
         self.database.delete(obj)
         self.database.commit()

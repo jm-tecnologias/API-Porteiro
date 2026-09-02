@@ -84,7 +84,9 @@ class AddressSchema(Base):
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now)
     updated_at = Column("updated_at", DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
 
-    def __init__(self, province: str, city: str, nearby_hood: str | None, avenue: str | None, number: int | None):
+    def __init__(self, building_id: int, province: str, city: str, nearby_hood: str | None, avenue: str | None,
+                 number: int | None):
+        self.building_id = building_id
         self.province = province
         self.city = city
         self.nearby_hood = nearby_hood
