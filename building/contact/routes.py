@@ -14,7 +14,8 @@ def get_contact_service(database: Session = Depends(get_database)) -> ContactSer
 @contact_router.get('/find-all/{build_id}/{status}', response_model=list[ContactResponse],
                     status_code=status.HTTP_200_OK)
 async def get_all(build_id: int, status: bool = None,
-                  skip: int = Query(default=0, ge=0), limit: int = Query(default=100, ge=1, le=500),
+                  skip: int = Query(default=0, ge=0),
+                  limit: int = Query(default=100, ge=1, le=500),
                   service: ContactService = Depends(get_contact_service)) -> list[ContactResponse]:
     return service.find_all(building_id=build_id, skip=skip, limit=limit, status=status)
 

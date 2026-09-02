@@ -42,7 +42,7 @@ class AddressService:
     def find_building_address(self, building_id: int) -> AddressResponse | None:
         building = self.dao_building.find_by_id(building_id)
         if not building:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='building Data Not Found!')
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Parent Data Not Found!')
         address = self.dao.find_address(building_id=building_id)
         if address is not None:
             return address
