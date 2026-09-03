@@ -1,14 +1,17 @@
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class EmployeeModel(BaseModel):
-    id: int | None = Field(gt=0)
-    code: str = Field(min_length=3)
-    name: str = Field(min_length=2)
-    surname: str = Field(min_length=2)
-    description: str = Field(min_length=100, max_length=1000)
-    building_id: int
-    status: bool
+    code: str | None = None
+    name: str | None = None
+    surname: str | None = None
+    description: str | None = None
+    building_id: int | None = None
+    status: bool | None = None
+
+
+class EmployeeResponse(EmployeeModel):
+    id: int
     created_at: datetime
     updated_at: datetime

@@ -5,6 +5,7 @@ from starlette.middleware.cors import CORSMiddleware
 from building.address.routes import address_router
 from building.contact.routes import contact_router
 from building.rh.department.routes import department_router
+from building.rh.employee.routes import employee_router
 from building.routes import building_router
 from utils.database import create_database_tables
 
@@ -35,3 +36,4 @@ app.include_router(building_router)
 app.include_router(contact_router)
 app.include_router(address_router)
 app.include_router(department_router)
+app.include_router(employee_router)

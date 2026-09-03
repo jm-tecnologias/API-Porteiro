@@ -35,6 +35,10 @@ class BaseDAO(Generic[T]):
         stmt = select(self.model).where(self.model.name == obj_name)
         return self.database.scalar(stmt)
 
+    def find_by_code(self, obj_code: str) -> T:
+        stmt = select(self.model).where(self.model.code == obj_code)
+        return self.database.scalar(stmt)
+
     def find_by_phone(self, obj_phone: str) -> T:
         stmt = select(self.model).where(self.model.phone == obj_phone)
         return self.database.scalar(stmt)
