@@ -1,5 +1,5 @@
 from utils.base import Base
-from datetime import datetime
+from datetime import datetime, date
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean, Date
 
 
@@ -15,7 +15,7 @@ class DepartmentEmployeeSchema(Base):
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now, primary_key=True)
     updated_at = Column("updated_at", DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
 
-    def __init__(self, department_id: int, employee_id: int, position: str, initial_date: Date, final_date: Date,
+    def __init__(self, department_id: int, employee_id: int, position: str, initial_date: date, final_date: date,
                  description: str | None, status: bool | True):
         self.department_id = department_id
         self.employee_id = employee_id

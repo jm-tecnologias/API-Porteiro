@@ -25,7 +25,7 @@ class DepartmentService:
             department = self.dao.create(new)
         except InterruptedError:
             self.dao.rollback()
-            raise HTTPException(status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION,
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                                 detail='Data Structure Not Valid')
         return department
 
