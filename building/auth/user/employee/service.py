@@ -1,14 +1,14 @@
 from building.database.schemas.employee_user_schema import EmployeeUserSchema
-from building.security.profile.dao import ProfileDAO
+from building.auth.profile.dao import ProfileDAO
 from building.rh.employee.dao import EmployeeDAO
-from building.rh.employee.user.dao import UserDAO
+from building.auth.user.employee.dao import UserDAO
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 import bcrypt
 from dotenv import load_dotenv
 import os
 
-from building.rh.employee.user.model import UserResponse, UserModel
+from building.auth.user.employee.model import UserResponse, UserModel
 
 load_dotenv()
 

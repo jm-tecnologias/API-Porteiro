@@ -1,8 +1,8 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from building.security.profile.dao import ProfileDAO
-from building.security.profile.model import ProfileModel, ProfileResponse
+from building.auth.profile.dao import ProfileDAO
+from building.auth.profile.model import ProfileModel, ProfileResponse
 from building.database.schemas.profile_schema import ProfileSchema
 
 
