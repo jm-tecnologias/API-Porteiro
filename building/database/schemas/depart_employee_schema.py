@@ -1,4 +1,4 @@
-from utils.base import Base
+from building.database.base import Base
 from datetime import datetime, date
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean, Date
 

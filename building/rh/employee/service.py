@@ -1,9 +1,9 @@
-from fastapi import HTTPException, status, Query
+from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from building.dao import BuildingDAO
+from building.database.schemas.employee_schema import EmployeeSchema
 from building.rh.employee.dao import EmployeeDAO
 from building.rh.employee.model import EmployeeModel, EmployeeResponse
-from utils.schemas.building_schema import EmployeeSchema
 
 
 class EmployeeService:

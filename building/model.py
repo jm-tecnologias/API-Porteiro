@@ -1,11 +1,11 @@
 from __future__ import annotations
 from datetime import datetime
 from pydantic import BaseModel, Field, ConfigDict
-from building.apartment.model import ApartmentModel
+from building.apartment.model import ApartmentResponse
 from building.client.model import ClientModel
 from building.contact.model import ContactResponse
-from building.rh.department.model import DepartmentModel
-from building.rh.employee.model import EmployeeModel
+from building.rh.department.model import DepartmentResponse
+from building.rh.employee.model import EmployeeResponse
 
 
 class BuildingModel(BaseModel):
@@ -19,9 +19,9 @@ class BuildingResponse(BuildingModel):
     created_at: datetime
     updated_at: datetime
     contacts: list[ContactResponse] = Field(default_factory=list)
-    departments: list[DepartmentModel] = Field(default_factory=list)
-    employees: list[EmployeeModel] = Field(default_factory=list)
-    apartments: list[ApartmentModel] = Field(default_factory=True)
+    departments: list[DepartmentResponse] = Field(default_factory=list)
+    employees: list[EmployeeResponse] = Field(default_factory=list)
+    apartments: list[ApartmentResponse] = Field(default_factory=True)
     clients: list[ClientModel] = Field(default_factory=True)
     model_config = ConfigDict(
         from_attributes=True

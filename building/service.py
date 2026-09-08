@@ -2,7 +2,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from building.dao import BuildingDAO
 from building.model import BuildingModel, BuildingResponse
-from utils.schemas.building_schema import BuildingSchema
+from building.database.schemas.building_schema import BuildingSchema
 
 
 class BuildingService:
@@ -44,8 +44,8 @@ class BuildingService:
             return building_list
         return buildings
 
-from utils.database import SessionLocal
-database = SessionLocal()
+# from utils.database import SessionLocal
+# database = SessionLocal()
 # ========= Create =========
 # try:
 #     service = BuildingService(database)

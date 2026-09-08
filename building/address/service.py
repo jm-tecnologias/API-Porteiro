@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from building.address.dao import AddressDAO
 from building.address.model import AddressResponse, AddressModel
 from building.dao import BuildingDAO
-from utils.schemas.building_schema import AddressSchema
+from building.database.schemas.building_schema import AddressSchema
 
 
 class AddressService:

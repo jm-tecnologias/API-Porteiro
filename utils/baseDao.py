@@ -35,6 +35,10 @@ class BaseDAO(Generic[T]):
         stmt = select(self.model).where(self.model.name == obj_name)
         return self.database.scalar(stmt)
 
+    def find_by_surname(self, obj_surname: str) -> T:
+        stmt = select(self.model).where(self.model.surname == obj_surname)
+        return self.database.scalar(stmt)
+
     def find_by_code(self, obj_code: str) -> T:
         stmt = select(self.model).where(self.model.code == obj_code)
         return self.database.scalar(stmt)
@@ -61,10 +65,6 @@ class BaseDAO(Generic[T]):
 
     def find_by_avenue(self, obj_avenue: str) -> T:
         stmt = select(self.model).where(self.model.avenue == obj_avenue)
-        return self.database.scalar(stmt)
-
-    def find_by_number(self, obj_number: int) -> T:
-        stmt = select(self.model).where(self.model.number == obj_number)
         return self.database.scalar(stmt)
 
     def delete(self, obj: T) -> None:

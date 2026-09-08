@@ -1,11 +1,11 @@
-from datetime import date, datetime
+from datetime import date
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from building.rh.department.dao import DepartmentDAO
 from building.rh.department_employee.dao import DepEmpDAO
 from building.rh.department_employee.model import DepEmpResponse, DepEmpModel
 from building.rh.employee.dao import EmployeeDAO
-from utils.schemas.depart_employee_schema import DepartmentEmployeeSchema
+from building.database.schemas.depart_employee_schema import DepartmentEmployeeSchema
 
 # Falta apenas definir as rotas
 

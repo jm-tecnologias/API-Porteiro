@@ -1,15 +1,18 @@
 from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class ClientModel(BaseModel):
-    id: int | None = Field(gt=0)
-    user_id: int = Field(gt=0)
-    surname: str = Field(min_length=2)
-    num_members: int = Field(gt=0)
-    description: str = Field(min_length=100, max_length=1000)
-    building_id: int
-    status: bool
+    user_id: int | None = None
+    surname: str | None = None
+    num_members: int | None = None
+    description: str | None = None
+    building_id: int | None = None
+    status: bool | None = None
+
+
+class ClientResponse(ClientModel):
+    id: int
     created_at: datetime
     updated_at: datetime

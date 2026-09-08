@@ -1,9 +1,9 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from building.dao import BuildingDAO
+from building.database.schemas.department_schema import DepartmentSchema
 from building.rh.department.dao import DepartmentDAO
 from building.rh.department.model import DepartmentResponse, DepartmentModel
-from utils.schemas.building_schema import DepartmentSchema
 
 
 class DepartmentService:

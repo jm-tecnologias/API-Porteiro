@@ -1,8 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from building.database.schemas.apartment_schema import ApartmentSchema
 from utils.baseDao import BaseDAO
-from utils.schemas.building_schema import ApartmentSchema
 
 
 class ApartmentDAO(BaseDAO[ApartmentSchema]):

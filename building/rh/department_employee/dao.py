@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from utils.baseDao import BaseDAO
-from utils.schemas.depart_employee_schema import DepartmentEmployeeSchema
+from building.database.schemas.depart_employee_schema import DepartmentEmployeeSchema
 
 
 class DepEmpDAO(BaseDAO[DepartmentEmployeeSchema]):

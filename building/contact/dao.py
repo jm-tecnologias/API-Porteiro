@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from building.contact.model import ContactResponse
 from utils.baseDao import BaseDAO
-from utils.schemas.building_schema import ContactSchema
+from building.database.schemas.building_schema import ContactSchema
 
 
 class ContactDAO(BaseDAO[ContactSchema]):

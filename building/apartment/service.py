@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from building.apartment.dao import ApartmentDAO
 from building.apartment.model import ApartmentResponse, ApartmentModel
 from building.dao import BuildingDAO
-from utils.schemas.building_schema import ApartmentSchema
+from building.database.schemas.apartment_schema import ApartmentSchema
 
 
 class ApartmentService:

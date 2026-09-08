@@ -1,9 +1,8 @@
-from fastapi import Query
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from building.database.schemas.employee_schema import EmployeeSchema
 from utils.baseDao import BaseDAO
-from utils.schemas.building_schema import EmployeeSchema
 
 
 class EmployeeDAO(BaseDAO[EmployeeSchema]):

@@ -1,8 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from building.database.schemas.department_schema import DepartmentSchema
 from utils.baseDao import BaseDAO
-from utils.schemas.building_schema import DepartmentSchema
 
 
 class DepartmentDAO(BaseDAO[DepartmentSchema]):

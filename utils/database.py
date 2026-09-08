@@ -3,7 +3,7 @@ from typing import Generator
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
-from utils.base import Base
+from building.database.base import Base
 
 PROJECT_ROOT = Path(__file__).parent.parent
 
@@ -33,22 +33,23 @@ SessionLocal = sessionmaker(
 
 
 # Schemas do Banco de dados
-# from utils.buildingSchema.building_schema import BuildingSchema
-# from utils.buildingSchema.building_schema import AddressSchema
-# from utils.buildingSchema.building_schema import ContactSchema
-# from utils.authSchema.profileSchema.user_profile_schema import ProfileSchema
-# from utils.RHSchema.department_schema import DepartmentSchema
-# from utils.RHSchema.employee_schema import EmployeeSchema
-# from utils.RHSchema.depart_employee_schema import DepartmentEmployeeSchema
-# from utils.authSchema.authemployee.user_schema import EmployeeUserSchema
-# from utils.APSchema.apartment_schema import ApartmentSchema
-# from utils.APSchema.client_schema import ClientSchema
-# from utils.APSchema.member_schema import MemberSchema
-# from utils.APSchema.checkIn_checkOut import CheckInOutSchema
-# from utils.authSchema.authclient.user_schema import MemberUserSchema
-# from utils.APSchema.historic_schema import HistoricSchema
-# from utils.APSchema.visitor_schema import VisitorSchema
-# from utils.APSchema.visitor_check_in_out import VisitorCheckInOutSchema
+from building.database.schemas.building_schema import BuildingSchema, ContactSchema, AddressSchema
+from building.database.schemas.client_schema import ClientSchema, MemberSchema, CheckInOutSchema
+from building.database.schemas.building_schema import BuildingSchema, ContactSchema, AddressSchema
+from building.database.schemas.client_schema import ClientSchema, MemberSchema, CheckInOutSchema
+from building.database.schemas.apartment_schema import ApartmentSchema
+from building.database.schemas.depart_employee_schema import DepartmentEmployeeSchema
+from building.database.schemas.department_schema import DepartmentSchema
+from building.database.schemas.employee_schema import EmployeeSchema
+from building.database.schemas.employee_user_schema import EmployeeUserSchema
+#, UserHistorySchema
+from building.database.schemas.historic_schema import HistoricSchema
+from building.database.schemas.profile_schema import ProfileSchema
+from building.database.schemas.visitor_schema import VisitorSchema
+from building.database.schemas.visitor_check_in_out import VisitorCheckInOutSchema
+from building.database.schemas.user_profile_schema import UserProfileSchema
+from building.database.schemas.permission_schema import PermissionSchema
+from building.database.schemas.profile_permission_schema import ProfilePermissionSchema
 
 
 def get_database() -> Generator[Session, None, None]:
@@ -63,16 +64,23 @@ def create_database_tables() -> None:
     """
     Importa os modelos e cria as tabelas registadas.
     """
-    from utils.schemas.building_schema import BuildingSchema
-    from utils.schemas.building_schema import AddressSchema
-    from utils.schemas.building_schema import ContactSchema
-    from utils.schemas.user_profile_schema import ProfileSchema
-    from utils.schemas.depart_employee_schema import DepartmentEmployeeSchema
-    from utils.schemas.employee_user_schema import EmployeeUserSchema
-    from utils.schemas.client_user_schema import MemberUserSchema
-    from utils.schemas.historic_schema import HistoricSchema
-    from utils.schemas.visitor_schema import VisitorSchema
-    from utils.schemas.visitor_check_in_out import VisitorCheckInOutSchema
+    from building.database.schemas.building_schema import BuildingSchema, ContactSchema, AddressSchema
+    from building.database.schemas.client_schema import ClientSchema, MemberSchema, CheckInOutSchema
+    from building.database.schemas.building_schema import BuildingSchema, ContactSchema, AddressSchema
+    from building.database.schemas.client_schema import ClientSchema, MemberSchema, CheckInOutSchema
+    from building.database.schemas.apartment_schema import ApartmentSchema
+    from building.database.schemas.depart_employee_schema import DepartmentEmployeeSchema
+    from building.database.schemas.department_schema import DepartmentSchema
+    from building.database.schemas.employee_schema import EmployeeSchema
+    from building.database.schemas.employee_user_schema import EmployeeUserSchema
+    # , UserHistorySchema
+    from building.database.schemas.historic_schema import HistoricSchema
+    from building.database.schemas.profile_schema import ProfileSchema
+    from building.database.schemas.visitor_schema import VisitorSchema
+    from building.database.schemas.visitor_check_in_out import VisitorCheckInOutSchema
+    from building.database.schemas.user_profile_schema import UserProfileSchema
+    from building.database.schemas.permission_schema import PermissionSchema
+    from building.database.schemas.profile_permission_schema import ProfilePermissionSchema
 
     print("Tabelas registadas:", list(Base.metadata.tables.keys()))
     Base.metadata.create_all(bind=engine)
