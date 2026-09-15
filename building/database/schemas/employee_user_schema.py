@@ -5,14 +5,14 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 
 
-class EmployeeUserSchema(Base):
+class UserEmployeeSchema(Base):
     __tablename__ = 'employee_user'
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column("username", String, nullable=False)
     password = Column("password", String, nullable=False)
     description = Column("description", String, nullable=True)
     employee_id = Column("employee_id", Integer, ForeignKey("employee.id"), nullable=False)
-    # profile_id = Column("profile_id", Integer, ForeignKey("profile.id"), nullable=False)
+    # profile_id = Column("profile_id", Integer, ForeignKey("create_profile.id"), nullable=False)
     status = Column("status", Boolean, nullable=False, default=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now)
     updated_at = Column("updated_at", DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
@@ -32,10 +32,10 @@ class EmployeeUserSchema(Base):
 #     __tablename__ = "user_history"
 #
 #     id = Column("id", Integer, primary_key=True, autoincrement=True)
-#     user_id = Column("user_id", Integer, ForeignKey("user.id"), nullable=False)
+#     user_id = Column("user_id", Integer, ForeignKey("create_user.id"), nullable=False)
 #     action = Column("action", String, nullable=False)
 #     accessed_at = Column("accessed_at", DateTime, default=datetime.now, nullable=False)
-#     user = relationship(
+#     create_user = relationship(
 #         "UserSchema",
 #         back_populates="histories",
 #     )

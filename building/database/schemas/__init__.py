@@ -6,13 +6,14 @@ from .apartment_schema import ApartmentSchema
 from .depart_employee_schema import DepartmentEmployeeSchema
 from .department_schema import DepartmentSchema
 from .employee_schema import EmployeeSchema
-from .employee_user_schema import EmployeeUserSchema
+from .employee_user_schema import UserEmployeeSchema
 from .historic_schema import HistoricSchema
 from .profile_schema import ProfileSchema
 from .visitor_schema import VisitorSchema
 from .visitor_check_in_out_schema import VisitorCheckInOutSchema
-from .employee_user_profile_schema import UserProfileEmployeeSchema
+from .user_profile_employee_schema import UserProfileEmployeeSchema
+from .user_profile_client_schema import UserProfileMemberSchema
 from .permission_schema import PermissionSchema
 from .profile_permission_schema import ProfilePermissionSchema
 from .ordinary_visitor_schema import OrdinaryVisitorSchema
-from .member_user_schema import MemberUserSchema
+from .member_user_schema import UserMemberSchema

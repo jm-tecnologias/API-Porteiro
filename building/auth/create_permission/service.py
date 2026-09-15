@@ -2,8 +2,8 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
 from building.database.schemas import PermissionSchema
-from building.auth.permission.dao import PermissionDAO
-from building.auth.permission.model import PermissionResponse, PermissionModel
+from building.auth.create_permission.dao import PermissionDAO
+from building.auth.create_permission.model import PermissionResponse, PermissionModel
 
 
 class PermissionService:
@@ -34,7 +34,7 @@ class PermissionService:
 #         module="USER",
 #         action="DELETE",
 #     )
-#     user = service.create(data)
+#     create_user = service.create(data)
 #
 # finally:
 #     database.close()

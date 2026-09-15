@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
-class UserModel(BaseModel):
+class UserEmployeeModel(BaseModel):
     username: str | None = None
     password: str | None = None
     description: str | None = None
@@ -12,7 +12,7 @@ class UserModel(BaseModel):
     status: bool | None = None
 
 
-class UserResponse(UserModel):
+class UserEmployeeResponse(UserEmployeeModel):
     id: int
     created_at: datetime
     updated_at: datetime

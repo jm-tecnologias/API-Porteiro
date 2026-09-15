@@ -4,9 +4,9 @@ from sqlalchemy import Column, Integer, String, DateTime, Boolean
 
 
 class ProfileSchema(Base):
-    __tablename__ = "profile"
+    __tablename__ = "create_profile"
     id = Column("id", Integer, primary_key=True, index=True)
-    profile = Column("profile", String, nullable=False)
+    profile = Column("create_profile", String, nullable=False)
     description = Column("description", String, nullable=True)
     status = Column("status", Boolean, default=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now)

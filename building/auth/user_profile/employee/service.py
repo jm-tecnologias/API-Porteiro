@@ -1,16 +1,16 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from building.auth.user_profile.employee.dao import UserProfileDAO
-from building.auth.user_profile.employee.model import UserProfileModel, UserProfileResponse
+from building.auth.user_profile.employee.dao import UserProfileEmployeeDAO
+from building.auth.user_profile.employee.model import UserProfileEmployeeModel, UserProfileEmployeeResponse
 from building.database.schemas import UserProfileEmployeeSchema
 
 
-class UserProfileService:
+class UserProfileEmployeeService:
     def __init__(self, database: Session):
-        self.dao = UserProfileDAO(database)
+        self.dao = UserProfileEmployeeDAO(database)
 
-    def create(self, model: UserProfileModel) -> UserProfileResponse:
+    def create(self, model: UserProfileEmployeeModel) -> UserProfileEmployeeResponse:
         user_profile = self.dao.check_user_profile(model.profile_id, model.employee_user_id)
         if user_profile:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Profile Already Given!')
@@ -28,7 +28,7 @@ class UserProfileService:
 # from building.database import models
 # database = SessionLocal()
 # try:
-#     service = UserProfileService(database)
+#     service = UserProfileEmployeeService(database)
 #     data = UserProfileModel(
 #         profile_id=3,
 #         employee_user_id=1,

@@ -5,7 +5,7 @@ from building.database.schemas import UserProfileEmployeeSchema
 from utils.baseDao import BaseDAO
 
 
-class UserProfileDAO(BaseDAO[UserProfileEmployeeSchema]):
+class UserProfileEmployeeDAO(BaseDAO[UserProfileEmployeeSchema]):
     def __init__(self, database: Session):
         super().__init__(
             database=database,

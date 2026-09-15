@@ -1,8 +1,8 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from building.auth.profile.dao import ProfileDAO
-from building.auth.profile.model import ProfileModel, ProfileResponse
+from building.auth.create_profile.dao import ProfileDAO
+from building.auth.create_profile.model import ProfileModel, ProfileResponse
 from building.database.schemas.profile_schema import ProfileSchema
 
 
@@ -43,11 +43,11 @@ class ProfileService:
 # try:
 #     service = ProfileService(database)
 #     data = ProfileModel(
-#         profile="Recepcionist",
+#         create_profile="Recepcionist",
 #         description="Recepcionista do Edificio",
 #         status=True
 #     )
-#     user = service.create(data)
+#     create_user = service.create(data)
 
     # clients = service.list_all()
     # for client in clients:

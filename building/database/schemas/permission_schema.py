@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey
 
 
 class PermissionSchema(Base):
-    __tablename__ = "permission"
+    __tablename__ = "create_permission"
     id = Column("id", Integer, primary_key=True, index=True)
     module = Column("module", String, nullable=False)
     action = Column("action", String, nullable=False)
