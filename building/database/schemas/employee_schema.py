@@ -4,7 +4,6 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 
 
-
 class EmployeeSchema(Base):
     __tablename__ = 'employee'
     id = Column(Integer, primary_key=True, autoincrement=True)

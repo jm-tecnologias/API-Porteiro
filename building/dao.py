@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-
 from utils.baseDao import BaseDAO
 from building.database.schemas.building_schema import BuildingSchema
 

@@ -18,6 +18,7 @@ class MemberService:
         new = MemberSchema(
             user_id=model.user_id,
             client_id=model.client_id,
+            apartment_id=model.apartment_id,
             doc_id=model.doc_id,
             name=model.name,
             surname=model.surname,
@@ -31,23 +32,27 @@ class MemberService:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible TO Add Data!')
 
+    def list_all(self) -> list[MemberResponse]:
+        return self.dao.find_all()
 
-# from utils.database import SessionLocal
-# from building.database import models
-# database = SessionLocal()
-# try:
-#     service = MemberService(database)
-#     data = MemberModel(
-#         user_id=1,
-#         client_id=1,
-#         doc_id="110100692835M",
-#         name="Junior",
-#         surname="Mula",
-#         phone="878201993",
-#         email="email",
-#         description="Cliente membo de teste"
-#     )
-#     service.create(data)
-#
-# finally:
-#     database.close()
+
+from utils.database import SessionLocal
+from building.database import models
+database = SessionLocal()
+try:
+    service = MemberService(database)
+    data = MemberModel(
+        user_id=1,
+        client_id=1,
+        doc_id="110100692835M",
+        apartment_id=1,
+        name="Teste",
+        surname="Mula",
+        phone="878201953",
+        email="email",
+        description="Cliente membo de teste"
+    )
+    service.create(data)
+
+finally:
+    database.close()

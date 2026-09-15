@@ -69,3 +69,22 @@ class ContactService:
         if status is not None:
             return contact_list
         return contacts
+
+# from utils.database import SessionLocal
+# from building.database import models
+# database = SessionLocal()
+#
+# try:
+#     service = ContactService(database)
+#     data = ContactModel(
+#         phone='800793',
+#         email='comarcial@jm-tecnologias.co.mz',
+#         website='www.jm-tecnologias.co.mz',
+#         building_id=1,
+#         status=True
+#     )
+#     address = service.create(data)
+#     print("Address created:")
+#
+# finally:
+#     database.close()

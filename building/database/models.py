@@ -1,17 +1,18 @@
-from building.database.schemas.building_schema import BuildingSchema, ContactSchema, AddressSchema
-from building.database.schemas.client_schema import ClientSchema, MemberSchema
-from building.database.schemas.building_schema import BuildingSchema, ContactSchema, AddressSchema
-from building.database.schemas.member_check_in_out import CheckInOutSchema
 from building.database.schemas.apartment_schema import ApartmentSchema
+from building.database.schemas.building_schema import BuildingSchema, ContactSchema, AddressSchema
+from building.database.schemas.client_schema import ClientSchema
+from building.database.schemas.member_schema import MemberSchema
+from building.database.schemas.member_check_in_out_schema import MemberCheckInOutSchema
 from building.database.schemas.depart_employee_schema import DepartmentEmployeeSchema
 from building.database.schemas.department_schema import DepartmentSchema
 from building.database.schemas.employee_schema import EmployeeSchema
 from building.database.schemas.employee_user_schema import EmployeeUserSchema
-#, UserHistorySchema
 from building.database.schemas.historic_schema import HistoricSchema
 from building.database.schemas.profile_schema import ProfileSchema
 from building.database.schemas.visitor_schema import VisitorSchema
-from building.database.schemas.visitor_check_in_out import VisitorCheckInOutSchema
+from building.database.schemas.visitor_check_in_out_schema import VisitorCheckInOutSchema
 from building.database.schemas.employee_user_profile_schema import UserProfileEmployeeSchema
 from building.database.schemas.permission_schema import PermissionSchema
 from building.database.schemas.profile_permission_schema import ProfilePermissionSchema
+from building.database.schemas.ordinary_visitor_schema import OrdinaryVisitorSchema
+from building.database.schemas.member_user_schema import MemberUserSchema

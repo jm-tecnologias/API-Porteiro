@@ -52,18 +52,18 @@ class ClientService:
 # try:
 #     service = ClientService(database)
 #     data = ClientModel(
-#         user_id=1,
-#         surname="Mula, Amilcar Jr",
+#         user_id=15,
+#         surname="Mula Jr",
 #         description="Primeiro Cliente: actualizado",
-#         # num_members=6,
-#         # building_id=1,
+#         num_members=3,
+#         building_id=1,
 #         status=True
 #     )
-#     # user = service.create(data)
+#     user = service.create(data)
 #
-#     clients = service.list_all()
-#     for client in clients:
-#         print(client.description)
+#     # clients = service.list_all()
+#     # for client in clients:
+#     #     print(client.description)
 #     # service.update(1, data)
 # finally:
 #     database.close()

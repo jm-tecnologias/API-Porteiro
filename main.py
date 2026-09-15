@@ -4,6 +4,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from building.address.routes import address_router
 from building.apartment.routes import apartment_router
+from building.auth.user.employee.routes import employee_user_router
 from building.contact.routes import contact_router
 from building.rh.department.routes import department_router
 from building.rh.department_employee.routes import depemp_router
@@ -20,13 +21,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Building-Management", version="1.0.0", lifespan=lifespan)
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
@@ -41,3 +42,4 @@ app.include_router(department_router)
 app.include_router(employee_router)
 app.include_router(depemp_router)
 app.include_router(apartment_router)
+app.include_router(employee_user_router)

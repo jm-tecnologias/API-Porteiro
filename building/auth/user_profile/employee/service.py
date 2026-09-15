@@ -1,8 +1,9 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
+
+from building.auth.user_profile.employee.dao import UserProfileDAO
+from building.auth.user_profile.employee.model import UserProfileModel, UserProfileResponse
 from building.database.schemas import UserProfileEmployeeSchema
-from building.auth.user_profile.dao import UserProfileDAO
-from building.auth.user_profile.model import UserProfileResponse, UserProfileModel
 
 
 class UserProfileService:
@@ -30,7 +31,7 @@ class UserProfileService:
 #     service = UserProfileService(database)
 #     data = UserProfileModel(
 #         profile_id=3,
-#         employee_user_id=2,
+#         employee_user_id=1,
 #     )
 #     service.create(data)
 #

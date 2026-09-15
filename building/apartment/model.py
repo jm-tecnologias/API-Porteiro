@@ -7,6 +7,7 @@ class ApartmentModel(BaseModel):
     number: str | None = None
     type: str | None = None
     description: str | None = None
+    occupation_state: str | None = None
     building_id: int | None = None
     status: bool | None = None
 

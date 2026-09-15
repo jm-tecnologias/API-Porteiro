@@ -80,6 +80,7 @@ class DepEmpService:
 
 
 # from utils.database import SessionLocal
+# from building.database import models
 # database = SessionLocal()
 # try:
 #     service = DepEmpService(database)
@@ -87,9 +88,9 @@ class DepEmpService:
 #         department_id=1,
 #         employee_id=1,
 #         status=True,
-#         position="Director Teste 4",
+#         position="Director Teste 1",
 #         initial_date=date.today(),
-#         description="Promocao do employee 1 de cargo de Gestor para Director Teste 4"
+#         description="Promocao do employee 1 de cargo de Gestor para Director Teste 1"
 #     )
 #     res = service.create(model)
 #     print("Cadastrado Employee ao departamento")

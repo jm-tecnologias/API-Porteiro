@@ -58,27 +58,28 @@ class DepartmentService:
         return departments
 
 
-# from utils.database import SessionLocal
-# database = SessionLocal()
-# try:
-#     service = DepartmentService(database)
-#     data = DepartmentSchema(
-#         code="FN-DEP-02",
-#         name="Financeiro",
-#         description="Departamento de contas internas e externas",
-#         building_id=1
-#     )
-#     dep = service.create(data)
-#     print('Department Created')
-#     print('ID: ', dep.id)
-#     print('Code: ', dep.code)
-#     print('Name: ', dep.name)
-#     print('Description: ', dep.description)
-#     print('Status: ', dep.status)
-#     print('Created at: ', dep.created_at)
-#     print('Updated at:', dep.updated_at)
-# finally:
-#     database.close()
+from utils.database import SessionLocal
+from building.database import models
+database = SessionLocal()
+try:
+    service = DepartmentService(database)
+    data = DepartmentSchema(
+        code="FN-DEP-01",
+        name="Financeiro",
+        description="Departamento de contas internas",
+        building_id=1
+    )
+    dep = service.create(data)
+    print('Department Created')
+    print('ID: ', dep.id)
+    print('Code: ', dep.code)
+    print('Name: ', dep.name)
+    print('Description: ', dep.description)
+    print('Status: ', dep.status)
+    print('Created at: ', dep.created_at)
+    print('Updated at:', dep.updated_at)
+finally:
+    database.close()
 
 # try:
 #     service = DepartmentService(database)

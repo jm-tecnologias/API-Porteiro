@@ -35,12 +35,6 @@ class UserService:
         if employee:
             if not employee.status:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Employee Is Disable')
-        profile = self.dao_profile.find_by_id(user_data.profile_id)
-        if not profile:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Parent Data(Profile) Not Found!')
-        if profile:
-            if not profile.status:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Profile Is Disable')
 
         new = EmployeeUserSchema(
             description=user_data.description,
@@ -121,6 +115,7 @@ class UserService:
     #     return user
 
 # from utils.database import SessionLocal
+# from building.database import models
 # database = SessionLocal()
 # try:
 #     service = UserService(database)

@@ -23,6 +23,7 @@ class ApartmentService:
             number=ap.number,
             building_id=ap.building_id,
             description=ap.description,
+            occupation_state=ap.occupation_state,
             _type=ap.type,
         )
         try:
@@ -49,6 +50,7 @@ class ApartmentService:
 
 
 # from utils.database import SessionLocal
+# from building.database import models
 # database = SessionLocal()
 # try:
 #     service = ApartmentService(database)

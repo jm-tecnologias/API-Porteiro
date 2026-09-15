@@ -22,6 +22,11 @@ async def update(build_id: int, build: BuildingModel,
     return service.update(build_id=build_id, build_data=build)
 
 
-@building_router.get('/list-all/{status}', response_model=list[BuildingResponse], status_code=status.HTTP_200_OK)
-async def get_buildings(status: bool, service: BuildingService = Depends(get_build_service)) -> list[BuildingResponse]:
-    return service.find_all_buildings(status=status)
+@building_router.get('/list-all', response_model=list[BuildingResponse], status_code=status.HTTP_200_OK)
+async def list_buildings(service: BuildingService = Depends(get_build_service)) -> list[BuildingResponse]:
+    return service.find_all_buildings()
+
+
+@building_router.get('/get/{building_id}', response_model=BuildingResponse, status_code=status.HTTP_200_OK)
+async def get(building_id: int, service: BuildingService = Depends(get_build_service)) -> BuildingResponse:
+    return service.get_building(building_id)

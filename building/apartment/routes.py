@@ -27,3 +27,4 @@ async def register(ap: ApartmentModel, service: ApartmentService = Depends(get_s
 async def update(apartment_id: int, apartment: ApartmentModel,
                  service: ApartmentService = Depends(get_service)) -> ApartmentResponse:
     return service.update(apartment_id, apartment)
+

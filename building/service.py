@@ -33,38 +33,36 @@ class BuildingService:
         except InterruptedError:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was not possible to update data.')
 
-    def find_all_buildings(self, status: bool = None) -> list[BuildingResponse]:
+    def find_all_buildings(self) -> list[BuildingResponse]:
         buildings = self.dao.find_all()
-        building_list = []
-        for build in buildings:
-            if status is not None:
-                if build.status == status:
-                    building_list.append(build)
-        if status is not None:
-            return building_list
         return buildings
 
+    def get_building(self, building_id: int) -> BuildingResponse:
+        return self.dao.find_by_id(building_id)
+
+
 # from utils.database import SessionLocal
+# from building.database import models
 # database = SessionLocal()
-# ========= Create =========
+# # ========= Create =========
 # try:
 #     service = BuildingService(database)
-#     data = BuildingSchema(
+#     data = BuildingModel(
 #          name="JAT35",
 #          description="Dados de teste",
 #          status=True
 #     )
 #     build = service.create(data)
-# print('Build Created:')
-# print('ID: ', build.id)
-# print('Name: ', build.name)
-# print('Description: ', build.description)
-# print('Status: ', build.status)
-# print('Created at: ', build.created_at)
-# print('Updated at: ', build.updated_at)
-# print('Contacts: ', build.contacts)
-# print('__________________________________________________________________')
-# print(' ')
+#     print('Build Created:')
+#     print('ID: ', build.id)
+#     print('Name: ', build.name)
+#     print('Description: ', build.description)
+#     print('Status: ', build.status)
+#     print('Created at: ', build.created_at)
+#     print('Updated at: ', build.updated_at)
+#     print('Contacts: ', build.contacts)
+#     print('__________________________________________________________________')
+#     print(' ')
 # finally:
 #     database.close()
 

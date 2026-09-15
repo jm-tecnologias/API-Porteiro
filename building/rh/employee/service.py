@@ -56,3 +56,20 @@ class EmployeeService:
         if state is not None:
             return employee_list
         return employees
+
+# from utils.database import SessionLocal
+# from building.database import models
+# database = SessionLocal()
+# try:
+#     service = EmployeeService(database)
+#     data = EmployeeModel(
+#         code='S408',
+#         name='Amilcar',
+#         surname="Mula",
+#         description='Funcionario teste',
+#         building_id=1,
+#     )
+#     service.create(data)
+#
+# finally:
+#     database.close()
