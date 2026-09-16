@@ -59,7 +59,7 @@ class ClientService:
 #         building_id=1,
 #         status=True
 #     )
-#     create_user = service.create(data)
+#     user = service.create(data)
 #
 #     # clients = service.list_all()
 #     # for client in clients:

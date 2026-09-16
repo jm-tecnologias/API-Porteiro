@@ -27,10 +27,10 @@ class UserMemberSchema(Base):
 #     __tablename__ = "user_history"
 #
 #     id = Column("id", Integer, primary_key=True, autoincrement=True)
-#     user_id = Column("user_id", Integer, ForeignKey("create_user.id"), nullable=False)
+#     user_id = Column("user_id", Integer, ForeignKey("user.id"), nullable=False)
 #     action = Column("action", String, nullable=False)
 #     accessed_at = Column("accessed_at", DateTime, default=datetime.now, nullable=False)
-#     create_user = relationship(
+#     user = relationship(
 #         "UserSchema",
 #         back_populates="histories",
 #     )

@@ -34,7 +34,7 @@ class PermissionService:
 #         module="USER",
 #         action="DELETE",
 #     )
-#     create_user = service.create(data)
+#     user = service.create(data)
 #
 # finally:
 #     database.close()

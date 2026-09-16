@@ -1,13 +1,14 @@
+from building.database.schemas.employee_user_schema import UserEmployeeSchema
+from building.auth.create_profile.dao import ProfileDAO
+from building.rh.employee.dao import EmployeeDAO
+from building.auth.user.employee.dao import UserEmployeeDAO
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 import bcrypt
 from dotenv import load_dotenv
 import os
 
-from building.auth.create_user.client.dao import UserMemberDAO
-from building.auth.create_user.client.model import UserMemberModel, UserMemberResponse
-from building.client.member.dao import MemberDAO
-from building.database.schemas.member_user_schema import UserMemberSchema
+from building.auth.user.employee.model import UserEmployeeResponse, UserEmployeeModel, LoginResponse
 
 load_dotenv()
 
@@ -17,49 +18,59 @@ TOKEN_EXPIRE_MINUTES = str(os.getenv("TOKEN_EXPIRE_MINUTES"))
 REFRESH_TOKEN_EXPIRE_HOURS = int(os.getenv("REFRESH_TOKEN_EXPIRE_HOURS", "8"))
 
 
-class UserMemberService:
+class UserEmployeeService:
     def __init__(self, database: Session):
-        self.dao = UserMemberDAO(database)
-        self.dao_member = MemberDAO(database)
+        self.dao = UserEmployeeDAO(database)
+        self.dao_employee = EmployeeDAO(database)
+        self.dao_profile = ProfileDAO(database)
 
-    def create(self, user_data: UserMemberModel) -> UserMemberResponse:
+    def create(self, user_data: UserEmployeeModel) -> UserEmployeeResponse:
         checked_user = self.dao.find_by_username(user_data.username)
         if checked_user:
             if checked_user.status:
                 raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='User Already Exist!')
-        client = self.dao_member.find_by_id(user_data.member_id)
-        if not client:
+        employee = self.dao_employee.find_by_id(user_data.employee_id)
+        if not employee:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Parent Data(Employee) Not Found!')
-        if client:
-            if not client.status:
+        if employee:
+            if not employee.status:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Employee Is Disable')
 
-        new = UserMemberSchema(
+        new = UserEmployeeSchema(
             description=user_data.description,
             status=user_data.status,
-            member_id=user_data.member_id,
+            employee_id=user_data.employee_id,
             password=self._hash_password(user_data.password),
+            # profile_id=user_data.profile_id,
             username=user_data.username
         )
         return self.dao.create(new)
 
-    def get_user_login(self, username: str, password: str) -> UserMemberResponse:
+    def get_user_login(self, username: str, password: str) -> LoginResponse:
         user = self.dao.find_by_username(username)
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
         elif not self._verify_password(password, user.password):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Password is incorrect")
-
+        login = LoginResponse(
+            id=user.id,
+            username=user.username,
+            description=user.description,
+            member_id=user.member_id,
+            status=user.status,
+            created_at=user.created_at,
+            updated_at=user.updated_at,
+        )
         # history_data = UserHistoryCreate(
-        #     user_id=create_user.id,
+        #     user_id=user.id,
         #     action="LOGIN"
         # )
         # self.history_service.create_history(history_data)
-        # res = UserResponse.model_validate(create_user)
+        # res = UserResponse.model_validate(user)
         # return res.model_copy(
         #     update={"token": self.create_token(res.id, res)}
         # )
-        return user
+        return login
 
     @staticmethod
     def _hash_password(password: str) -> str:
@@ -78,7 +89,7 @@ class UserMemberService:
         )
 
     # @staticmethod
-    # def create_token(user_id: int, create_user: UserResponse, token_duration=timedelta(minutes=int(TOKEN_EXPIRE_MINUTES)),
+    # def create_token(user_id: int, user: UserResponse, token_duration=timedelta(minutes=int(TOKEN_EXPIRE_MINUTES)),
     #                  token_type="access") -> str:
     #     token_date_expires = datetime.now(timezone.utc) + token_duration
     #     token_json = {
@@ -86,7 +97,7 @@ class UserMemberService:
     #         "type": token_type,
     #         "exp": token_date_expires,
     #         "iat": datetime.now(timezone.utc),
-    #         "role": create_user.user_type,
+    #         "role": user.user_type,
     #     }
     #     return jwt.encode(token_json, SECRET_KEY, ALGORITHM)
 
@@ -98,31 +109,36 @@ class UserMemberService:
     #         user_id = int(str(payload.get("sub")))
     #
     #         if user_id is None:
-    #             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token without create_user ID")
+    #             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token without user ID")
     #
     #         # user_id = int(user_id)
     #
     #     except (JWTError, TypeError, ValueError):
     #         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token or expired")
     #
-    #     create_user = self.dao.find_by_id(user_id)
+    #     user = self.dao.find_by_id(user_id)
     #
-    #     if not create_user:
-    #         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token create_user not found")
-    #     return create_user
+    #     if not user:
+    #         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token user not found")
+    #     return user
 
 # from utils.database import SessionLocal
 # from building.database import models
 # database = SessionLocal()
 # try:
-#     service = UserMemberService(database)
-#     data = UserMemberModel(
-#         username="Client",
+#     service = UserService(database)
+#     data = UserModel(
+#         username="Admin",
 #         password="Informatico@12",
 #         description="Test User",
-#         member_id=1,
+#         employee_id=1,
+#         # profile_id=2,
 #         status=True
 #     )
-#     create_user = service.create(data)
+#     user = service.create(data)
 # finally:
 #     database.close()
+
+
+
+

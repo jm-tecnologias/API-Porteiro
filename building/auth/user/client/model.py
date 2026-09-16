@@ -10,6 +10,16 @@ class UserMemberModel(BaseModel):
     status: bool | None = None
 
 
+class LoginResponse(BaseModel):
+    id: int
+    username: str
+    description: str
+    member_id: int
+    status: bool
+    created_at: datetime
+    updated_at: datetime
+
+
 class UserMemberResponse(UserMemberModel):
     id: int
     created_at: datetime
