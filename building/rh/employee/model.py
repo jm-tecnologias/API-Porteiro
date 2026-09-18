@@ -1,17 +1,19 @@
 from datetime import datetime
+from typing import Optional
+
 from pydantic import BaseModel
 
 
 class EmployeeModel(BaseModel):
-    code: str | None = None
-    name: str | None = None
-    surname: str | None = None
-    description: str | None = None
-    building_id: int | None = None
-    status: bool | None = None
+    code: Optional[str] = None
+    name: Optional[str] = None
+    surname: Optional[str] = None
+    description: Optional[str] = None
+    building_id: Optional[int] = None
+    status: Optional[bool] = None
 
 
 class EmployeeResponse(EmployeeModel):
-    id: int
-    created_at: datetime
-    updated_at: datetime
+    id: Optional[int] = None
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None

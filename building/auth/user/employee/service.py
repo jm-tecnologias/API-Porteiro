@@ -8,7 +8,8 @@ import bcrypt
 from dotenv import load_dotenv
 import os
 
-from building.auth.user.employee.model import UserEmployeeResponse, UserEmployeeModel, LoginResponse
+from building.auth.user.employee.model import UserEmployeeResponse, UserEmployeeModel, ModelLogin, UserEmployee
+from building.rh.employee.model import EmployeeResponse
 
 load_dotenv()
 
@@ -46,20 +47,41 @@ class UserEmployeeService:
         )
         return self.dao.create(new)
 
-    def get_user_login(self, username: str, password: str) -> LoginResponse:
+    def get_user_login(self, username: str, password: str) -> UserEmployee:
         user = self.dao.find_by_username(username)
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
         elif not self._verify_password(password, user.password):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Password is incorrect")
-        login = LoginResponse(
-            id=user.id,
-            username=user.username,
-            description=user.description,
-            member_id=user.member_id,
-            status=user.status,
-            created_at=user.created_at,
-            updated_at=user.updated_at,
+
+        employee = self.dao_employee.find_by_id(user.employee_id)
+        if not employee:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Parent Data(Employee) Not Found!')
+        if employee:
+            if not employee.status:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Employee Is Disable')
+
+        return UserEmployee(
+            user=ModelLogin(
+                id=user.id,
+                username=user.username,
+                description=user.description,
+                employee_id=user.employee_id,
+                status=user.status,
+                created_at=user.created_at,
+                updated_at=user.updated_at
+            ),
+            employee=EmployeeResponse(
+                id=employee.id,
+                code=employee.code,
+                name=employee.name,
+                surname=employee.surname,
+                description=employee.description,
+                building_id=employee.building_id,
+                status=employee.status,
+                created_at=employee.created_at,
+                updated_at=employee.updated_at
+            )
         )
         # history_data = UserHistoryCreate(
         #     user_id=user.id,
@@ -70,7 +92,7 @@ class UserEmployeeService:
         # return res.model_copy(
         #     update={"token": self.create_token(res.id, res)}
         # )
-        return login
+        # return login
 
     @staticmethod
     def _hash_password(password: str) -> str:
@@ -122,23 +144,22 @@ class UserEmployeeService:
     #         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token user not found")
     #     return user
 
-# from utils.database import SessionLocal
-# from building.database import models
-# database = SessionLocal()
-# try:
-#     service = UserService(database)
-#     data = UserModel(
-#         username="Admin",
-#         password="Informatico@12",
-#         description="Test User",
-#         employee_id=1,
-#         # profile_id=2,
-#         status=True
-#     )
-#     user = service.create(data)
-# finally:
-#     database.close()
 
+from utils.database import SessionLocal
+from building.database import models
 
-
-
+database = SessionLocal()
+try:
+    service = UserEmployeeService(database)
+    #     data = UserModel(
+    #         username="Admin",
+    #         password="Informatico@12",
+    #         description="Test User",
+    #         employee_id=1,
+    #         # profile_id=2,
+    #         status=True
+    #     )
+    #     user = service.create(data)
+    print(service.get_user_login('Admin', 'Informatico@12'))
+finally:
+    database.close()

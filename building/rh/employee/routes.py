@@ -12,12 +12,12 @@ def get_service(database: Session = Depends(get_database)) -> EmployeeService:
     return EmployeeService(database)
 
 
-@employee_router.get('/find-all/{building_id}/{state}', response_model=list[EmployeeResponse],
+@employee_router.get('/find-all/{building_id}', response_model=list[EmployeeResponse],
                      status_code=status.HTTP_200_OK)
-async def get(building_id: int, state:  bool = None,skip: int = Query(default=0, ge=0),
+async def get(building_id: int, skip: int = Query(default=0, ge=0),
               limit: int = Query(default=100, ge=1, le=500),
               service: EmployeeService = Depends(get_service)) -> list[EmployeeResponse]:
-    return service.find_all(building_id, skip, limit, state)
+    return service.find_all(building_id, skip, limit)
 
 
 @employee_router.post('/register', response_model=EmployeeResponse, status_code=status.HTTP_201_CREATED)

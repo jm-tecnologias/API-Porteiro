@@ -42,26 +42,20 @@ class EmployeeService:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible To Update Data!')
 
-    def find_all(self, building_id: int, skip: int, limit: int, state: bool = None) -> list[EmployeeResponse]:
+    def find_all(self, building_id: int, skip: int, limit: int) -> list[EmployeeResponse]:
         building = self.dao_build.find_by_id(building_id)
         if not building:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Parent Data Not Found!')
 
         employees = self.dao.list_employees(building_id=building_id, skip=skip, limit=limit)
-        employee_list = []
-        for employee in employees:
-            if state is not None:
-                if employee.status == state:
-                    employee_list.append(employee)
-        if state is not None:
-            return employee_list
+
         return employees
 
-# from utils.database import SessionLocal
-# from building.database import models
-# database = SessionLocal()
-# try:
-#     service = EmployeeService(database)
+from utils.database import SessionLocal
+from building.database import models
+database = SessionLocal()
+try:
+    service = EmployeeService(database)
 #     data = EmployeeModel(
 #         code='S408',
 #         name='Amilcar',
@@ -71,5 +65,5 @@ class EmployeeService:
 #     )
 #     service.create(data)
 #
-# finally:
-#     database.close()
+finally:
+    database.close()
