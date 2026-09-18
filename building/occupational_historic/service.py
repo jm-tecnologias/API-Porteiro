@@ -1,9 +1,12 @@
+from typing import List
+
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
 from building.database.schemas import HistoricSchema
 from building.occupational_historic.dao import HistoricDAO
-from building.occupational_historic.model import HistoricResponse, HistoricModel
+from building.occupational_historic.model import HistoricResponse, HistoricModel, HistoricApartmentResponse, Historic, \
+    Apartment
 
 
 class HistoricService:
@@ -26,24 +29,54 @@ class HistoricService:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible To Add Data!')
 
-    def list_all(self) -> list[HistoricResponse]:
-        return self.dao.find_all()
+    def list_all(self) -> list[HistoricApartmentResponse]:
+        data = self.dao.list_all()
+        if data is None:
+            return None
+        historic_apartment = []
+        for parts in data:
+            hist, ap = parts
+            historic_apartment.append(HistoricApartmentResponse(
+                historic=Historic(
+                    client_id=hist.client_id,
+                    apartment_id=hist.apartment_id,
+                    occupational_date=hist.occupational_date,
+                    final_date=hist.final_date,
+                    description=hist.description
+                ),
+                apartment=Apartment(
+                    id=ap.id,
+                    floor=ap.floor,
+                    number=ap.number,
+                    type=ap.type,
+                    occupation_state=ap.occupation_state,
+                    description=ap.description
+                )
+            ))
+        return historic_apartment
 
 
-# from utils.database import SessionLocal
-# from building.database import models
-# database = SessionLocal()
-# try:
-#     service = HistoricService(database)
+
+from utils.database import SessionLocal
+from building.database import models
+database = SessionLocal()
+try:
+    service = HistoricService(database)
 #     data = HistoricModel(
 #         client_id=1,
 #         user_id=1,
 #         apartment_id=1,
-#         occupational_date='2026-08-31',
+#         occupational_date='2026-09-01',
 #         # final_date=model.final_date,
-#         description='Test',
-#         num_members=4
+#         description='Segunda Ocupacao',
+#         num_members=8
 #     )
 #     service.create(data)
-# finally:
-#     database.close()
+    data_set = service.list_all()
+    print(data_set)
+    # for historic, apartment in data_set:
+    #     print('Client id: ', historic.client_id)
+    #     print(apartment.number)
+#
+finally:
+    database.close()
