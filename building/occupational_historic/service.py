@@ -57,26 +57,26 @@ class HistoricService:
 
 
 
-from utils.database import SessionLocal
-from building.database import models
-database = SessionLocal()
-try:
-    service = HistoricService(database)
+# from utils.database import SessionLocal
+# from building.database import models
+# database = SessionLocal()
+# try:
+#     service = HistoricService(database)
 #     data = HistoricModel(
 #         client_id=1,
 #         user_id=1,
 #         apartment_id=1,
 #         occupational_date='2026-09-01',
-#         # final_date=model.final_date,
-#         description='Segunda Ocupacao',
-#         num_members=8
-#     )
-#     service.create(data)
-    data_set = service.list_all()
-    print(data_set)
+        # final_date=model.final_date,
+        # description='Segunda Ocupacao',
+        # num_members=8
+    # )
+    # service.create(data)
+    # data_set = service.list_all()
+    # print(data_set)
     # for historic, apartment in data_set:
     #     print('Client id: ', historic.client_id)
     #     print(apartment.number)
 #
-finally:
-    database.close()
+# finally:
+#     database.close()

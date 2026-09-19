@@ -15,7 +15,6 @@ class HistoricModel(BaseModel):
 
 
 class HistoricResponse(HistoricModel):
-    id: int
     created_at: datetime
     updated_at: datetime
 
