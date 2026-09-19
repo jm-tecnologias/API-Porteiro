@@ -1,8 +1,10 @@
+from http import client
 from typing import List
 
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
+from building.client.dao import ClientDAO
 from building.database.schemas import HistoricSchema
 from building.occupational_historic.dao import HistoricDAO
 from building.occupational_historic.model import HistoricResponse, HistoricModel, HistoricApartmentResponse, Historic, \
@@ -12,8 +14,14 @@ from building.occupational_historic.model import HistoricResponse, HistoricModel
 class HistoricService:
     def __init__(self, database: Session):
         self.dao = HistoricDAO(database)
+        self.dao_client = ClientDAO(database)
 
     def create(self, model: HistoricModel) -> HistoricResponse:
+        client = self.dao_client.find_by_id(model.client_id)
+        if client:
+            if client.status:
+                raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+                                    detail='Client Is No Longer Active!')
         new = HistoricSchema(
             client_id=model.client_id,
             user_id=model.user_id,
