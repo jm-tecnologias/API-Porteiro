@@ -1,18 +1,20 @@
 from datetime import datetime
+from typing import Optional
+
 from pydantic import BaseModel
 
 
 class ApartmentModel(BaseModel):
-    floor: str | None = None
-    number: str | None = None
-    type: str | None = None
-    description: str | None = None
-    occupation_state: str | None = None
-    building_id: int | None = None
-    status: bool | None = None
+    floor: Optional[str] = None
+    number: Optional[str] = None
+    type: Optional[str] = None
+    description: Optional[str] = None
+    occupation_state: Optional[str] = None
+    building_id: Optional[int] = None
+    status: Optional[bool] = None
 
 
 class ApartmentResponse(ApartmentModel):
-    id: int
-    created_at: datetime
-    updated_at: datetime
+    id: Optional[int] = None
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None

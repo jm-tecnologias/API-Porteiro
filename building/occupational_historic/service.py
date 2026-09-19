@@ -1,14 +1,11 @@
-from http import client
-from typing import List
-
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
+from building.apartment.model import ApartmentResponse
 from building.client.dao import ClientDAO
 from building.database.schemas import HistoricSchema
 from building.occupational_historic.dao import HistoricDAO
-from building.occupational_historic.model import HistoricResponse, HistoricModel, HistoricApartmentResponse, Historic, \
-    Apartment
+from building.occupational_historic.model import HistoricResponse, HistoricModel, HistoricApartmentResponse
 
 
 class HistoricService:
@@ -45,14 +42,14 @@ class HistoricService:
         for parts in data:
             hist, ap = parts
             historic_apartment.append(HistoricApartmentResponse(
-                historic=Historic(
+                historic=HistoricResponse(
                     client_id=hist.client_id,
                     apartment_id=hist.apartment_id,
                     occupational_date=hist.occupational_date,
                     final_date=hist.final_date,
                     description=hist.description
                 ),
-                apartment=Apartment(
+                apartment=ApartmentResponse(
                     id=ap.id,
                     floor=ap.floor,
                     number=ap.number,
