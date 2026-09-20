@@ -187,11 +187,11 @@ class UserMemberService:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token user not found")
         return user
 
-from utils.database import SessionLocal
-from building.database import models
-database = SessionLocal()
-try:
-    service = UserMemberService(database)
+# from utils.database import SessionLocal
+# from building.database import models
+# database = SessionLocal()
+# try:
+#     service = UserMemberService(database)
 #     data = UserMemberModel(
 #         username="Client",
 #         password="Informatico@12",
@@ -202,9 +202,9 @@ try:
 #     # user = service.create(data)
 #     user = service.get_user_login('Client', 'Informatico@12')
 #     print(user)
-    data_set = service.populate_dashboard(1)
-    print(type(data_set))
-    print(data_set)
+#     data_set = service.populate_dashboard(1)
+#     print(type(data_set))
+#     print(data_set)
     # for dados in data_set:
     #     print(dados[0])
     # if data_set:
@@ -227,5 +227,5 @@ try:
     # print(user.created_at)
     # print(user.updated_at)
     # print(user.token)
-finally:
-    database.close()
+# finally:
+#     database.close()

@@ -14,6 +14,7 @@ class MemberModel(BaseModel):
     surname: str | None = None
     phone: str | None = None
     email: str | None = None
+    client_relationship: str | None = None
     description: str | None = None
     status: bool | None = None
 

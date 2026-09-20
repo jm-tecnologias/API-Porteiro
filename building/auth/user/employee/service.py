@@ -145,12 +145,12 @@ class UserEmployeeService:
     #     return user
 
 
-from utils.database import SessionLocal
-from building.database import models
-
-database = SessionLocal()
-try:
-    service = UserEmployeeService(database)
+# from utils.database import SessionLocal
+# from building.database import models
+#
+# database = SessionLocal()
+# try:
+#     service = UserEmployeeService(database)
     #     data = UserModel(
     #         username="Admin",
     #         password="Informatico@12",
@@ -160,6 +160,6 @@ try:
     #         status=True
     #     )
     #     user = service.create(data)
-    print(service.get_user_login('Admin', 'Informatico@12'))
-finally:
-    database.close()
+    # print(service.get_user_login('Admin', 'Informatico@12'))
+# finally:
+#     database.close()

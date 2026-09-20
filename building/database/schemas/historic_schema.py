@@ -1,3 +1,5 @@
+from sqlalchemy.orm import relationship
+
 from building.database.base import Base
 from datetime import datetime, date
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Date
@@ -14,6 +16,10 @@ class HistoricSchema(Base):
     description = Column("description", String, nullable=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now, primary_key=True)
     updated_at = Column("updated_at", DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
+    client = relationship(
+        "ClientSchema",
+        back_populates="historical",
+    )
 
     def __init__(self, client_id: int, user_id: int, apartment_id: int, occupational_date: date,
 

@@ -16,7 +16,7 @@ class HistoricService:
     def create(self, model: HistoricModel) -> HistoricResponse:
         client = self.dao_client.find_by_id(model.client_id)
         if client:
-            if client.status:
+            if not client.status:
                 raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                                     detail='Client Is No Longer Active!')
         new = HistoricSchema(

@@ -25,6 +25,12 @@ class ClientSchema(Base):
         order_by="MemberSchema.id.asc()",
         cascade="all, delete-orphan",
     )
+    historical = relationship(
+        "HistoricSchema",
+        back_populates="client",
+        order_by="HistoricSchema.created_at.asc()",
+        cascade="all, delete-orphan",
+    )
 
     def __init__(self, user_id: int, surname: str, num_members: int | 1,  description: str | None, building_id: int):
         self.user_id = user_id

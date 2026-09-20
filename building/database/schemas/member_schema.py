@@ -16,6 +16,7 @@ class MemberSchema(Base):
     surname = Column("surname", String, nullable=False)
     phone = Column("phone", String, nullable=True)
     email = Column("email", String, nullable=True)
+    client_relationship = Column("client_relationship", String, nullable=True)
     description = Column("description", String, nullable=True)
     status = Column("status", Boolean, nullable=False, default=True)
     token = Column("token", String(64), nullable=False, unique=True, index=True,
@@ -40,7 +41,7 @@ class MemberSchema(Base):
     )
 
     def __init__(self, user_id: int, client_id: int, apartment_id: int, doc_id: str, name: str,  surname: str,
-                 phone: str | None, email: str | None, description: str | None):
+                 phone: str | None, email: str | None, client_relationship:str | None, description: str | None):
         self.user_id = user_id
         self.client_id = client_id
         self.apartment_id = apartment_id
@@ -49,4 +50,5 @@ class MemberSchema(Base):
         self.surname = surname
         self.phone = phone
         self.email = email
+        self.client_relationship = client_relationship
         self.description = description

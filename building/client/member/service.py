@@ -24,6 +24,7 @@ class MemberService:
             surname=model.surname,
             phone=model.phone,
             email=model.email,
+            client_relationship=model.client_relationship,
             description=model.description
         )
         try:

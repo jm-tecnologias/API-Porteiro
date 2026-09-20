@@ -51,11 +51,11 @@ class EmployeeService:
 
         return employees
 
-from utils.database import SessionLocal
-from building.database import models
-database = SessionLocal()
-try:
-    service = EmployeeService(database)
+# from utils.database import SessionLocal
+# from building.database import models
+# database = SessionLocal()
+# try:
+#     service = EmployeeService(database)
 #     data = EmployeeModel(
 #         code='S408',
 #         name='Amilcar',
@@ -65,5 +65,5 @@ try:
 #     )
 #     service.create(data)
 #
-finally:
-    database.close()
+# finally:
+#     database.close()
