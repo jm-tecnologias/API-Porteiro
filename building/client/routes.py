@@ -12,13 +12,16 @@ def get_service(database: Session = Depends(get_database)) -> ClientService:
     return ClientService(database)
 
 
-@client_router.get('/list-all', response_model=list[ClientResponse], status_code=status.HTTP_200_OK)
-async def get_clients(service: ClientService = Depends(get_service)) -> list[ClientResponse]:
-    return service.list_all()
-
-
 @client_router.post('/register', response_model=ClientResponse, status_code=status.HTTP_201_CREATED)
 async def create(model: ClientModel, service: ClientService = Depends(get_service)) -> ClientResponse:
     return service.create(model)
 
 
+@client_router.patch('/update/{client_id}', response_model=ClientResponse, status_code=status.HTTP_200_OK)
+async def update(client_id: int, model: ClientModel, service: ClientService = Depends(get_service)) -> ClientResponse:
+    return service.update(client_id, model)
+
+
+@client_router.get('/list-all', response_model=list[ClientResponse], status_code=status.HTTP_200_OK)
+async def get_clients(service: ClientService = Depends(get_service)) -> list[ClientResponse]:
+    return service.list_all()
