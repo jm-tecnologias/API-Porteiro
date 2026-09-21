@@ -22,3 +22,8 @@ async def get_historic(service: HistoricService = Depends(get_service)) -> list[
 @historic_router.post('/register', response_model=HistoricResponse, status_code=status.HTTP_201_CREATED)
 async def create(model: HistoricModel, service: HistoricService = Depends(get_service)) -> HistoricResponse:
     return service.create(model)
+
+
+@historic_router.patch('/update/{created_at}', response_model=HistoricResponse, status_code=status.HTTP_200_OK)
+async def update(created_at: str, model: HistoricModel, service: HistoricService = Depends(get_service)) -> HistoricResponse:
+    return service.update(created_at, model)

@@ -35,6 +35,21 @@ class HistoricService:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible To Add Data!')
 
+    def update(self, created_at: str, member_data: HistoricModel) -> HistoricResponse:
+        created_at = created_at.replace('T', ' ')
+        historic = self.dao.find_by_created_at(created_at)
+        if not historic:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Parent Not Found!')
+        data = member_data.model_dump(exclude_unset=True)
+        for field, value in data.items():
+            setattr(historic, field, value)
+        try:
+            return self.dao.update(historic)
+        except SQLAlchemyError:
+            self.dao.rollback()
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+                                detail='Was Not Possible To Update Data!')
+
     def list_all(self) -> list[HistoricApartmentResponse]:
         data = self.dao.list_all()
         if data is None:
@@ -61,28 +76,27 @@ class HistoricService:
             ))
         return historic_apartment
 
-
-
 # from utils.database import SessionLocal
 # from building.database import models
 # database = SessionLocal()
 # try:
 #     service = HistoricService(database)
+#     print('DDDD: ',service.dao.find_by_created_at('2026-09-21T22:37:39'.replace('T', ' ')).created_at)
 #     data = HistoricModel(
 #         client_id=1,
 #         user_id=1,
 #         apartment_id=1,
 #         occupational_date='2026-09-01',
-        # final_date=model.final_date,
-        # description='Segunda Ocupacao',
-        # num_members=8
-    # )
-    # service.create(data)
-    # data_set = service.list_all()
-    # print(data_set)
-    # for historic, apartment in data_set:
-    #     print('Client id: ', historic.client_id)
-    #     print(apartment.number)
+# final_date=model.final_date,
+# description='Segunda Ocupacao',
+# num_members=8
+# )
+# service.create(data)
+# data_set = service.list_all()
+# print(data_set)
+# for historic, apartment in data_set:
+#     print('Client id: ', historic.client_id)
+#     print(apartment.number)
 #
 # finally:
 #     database.close()

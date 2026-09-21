@@ -46,6 +46,7 @@ class MemberService:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                                 detail='Was Not Possible To Update Data!')
+
     def list_all(self) -> list[MemberResponse]:
         return self.dao.find_all()
 

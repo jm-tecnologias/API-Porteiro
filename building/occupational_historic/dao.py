@@ -18,3 +18,7 @@ class HistoricDAO(BaseDAO[HistoricSchema]):
                 .join(ApartmentSchema, HistoricSchema.apartment_id == ApartmentSchema.id)
                 )
         return self.database.execute(stmt).all()
+
+    def find_by_created_at(self, created_at: str) -> HistoricSchema:
+        stmt = select(HistoricSchema).where(HistoricSchema.created_at.like(f'{created_at}%'))
+        return self.database.scalar(stmt)
