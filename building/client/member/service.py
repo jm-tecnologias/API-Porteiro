@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-
+from sqlalchemy.exc import SQLAlchemyError
 from building.client.member.dao import MemberDAO
 from building.client.member.model import MemberResponse, MemberModel
 from building.database.schemas import MemberSchema
@@ -11,7 +11,7 @@ class MemberService:
         self.dao = MemberDAO(database)
 
     def create(self, model: MemberModel) -> MemberResponse:
-        member = self.dao.find_by_phone(model.name)
+        member = self.dao.find_by_name(model.name)
         if member:
             if member.surname == model.surname and member.status is True:
                 raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Member Already Exist!')
@@ -29,7 +29,7 @@ class MemberService:
         )
         try:
             return self.dao.create(new)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible TO Add Data!')
 
@@ -51,6 +51,7 @@ class MemberService:
 #         surname="Mula",
 #         phone="878201953",
 #         email="email",
+#         client_relationship="Filho",
 #         description="Cliente membo de teste"
 #     )
 #     service.create(data)

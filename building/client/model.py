@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field
 
 from building.client.member.model import MemberResponse
-from building.occupational_historic.model import HistoricApartmentResponse, HistoricResponse
+from building.occupational_historic.model import HistoricResponse
 
 
 class ClientModel(BaseModel):
