@@ -15,3 +15,8 @@ def get_service(database: Session = Depends(get_database)) -> MemberService:
 @member_router.post('/register', response_model=MemberResponse, status_code=status.HTTP_201_CREATED)
 async def create(model: MemberModel, service: MemberService = Depends(get_service)) -> MemberResponse:
     return service.create(model)
+
+
+@member_router.patch('/update/{member_id}', response_model=MemberResponse, status_code=status.HTTP_200_OK)
+async def update(member_id: int, model: MemberModel, service: MemberService = Depends(get_service)) -> MemberResponse:
+    return service.update(member_id, model)

@@ -33,6 +33,19 @@ class MemberService:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible TO Add Data!')
 
+    def update(self, member_id: int, member_data: MemberModel) -> MemberResponse:
+        member = self.dao.find_by_id(member_id)
+        if not member:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Member Not Found!')
+        data = member_data.model_dump(exclude_unset=True)
+        for field, value in data.items():
+            setattr(member, field, value)
+        try:
+            return self.dao.update(member)
+        except SQLAlchemyError:
+            self.dao.rollback()
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+                                detail='Was Not Possible To Update Data!')
     def list_all(self) -> list[MemberResponse]:
         return self.dao.find_all()
 
