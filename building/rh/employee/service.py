@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from building.dao import BuildingDAO
 from building.database.schemas.employee_schema import EmployeeSchema
@@ -24,7 +25,7 @@ class EmployeeService:
         )
         try:
             return self.dao.create(new)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION,
                                 detail='Data Structure Not Valid')
@@ -38,7 +39,7 @@ class EmployeeService:
             setattr(employee, field, value)
         try:
             return self.dao.update(employee)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible To Update Data!')
 

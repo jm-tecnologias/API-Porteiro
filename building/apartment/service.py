@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from building.apartment.dao import ApartmentDAO
 from building.apartment.model import ApartmentResponse, ApartmentModel
@@ -28,7 +29,7 @@ class ApartmentService:
         )
         try:
             return self.dao.create(new)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Data Structure Not Valid!')
 
@@ -41,7 +42,7 @@ class ApartmentService:
             setattr(apartment, field, value)
         try:
             return self.dao.update(apartment)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible To Update Data!')
 

@@ -1,5 +1,6 @@
 from datetime import date
 from fastapi import HTTPException, status
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from building.rh.department.dao import DepartmentDAO
 from building.rh.department_employee.dao import DepEmpDAO
@@ -41,7 +42,7 @@ class DepEmpService:
         )
         try:
             return self.dao.create(new)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Data Structure Not Valid')
 
@@ -56,7 +57,7 @@ class DepEmpService:
             setattr(dep_emp, field, value)
         try:
             self.dao.update(dep_emp)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Data Structure Not Valid!')
 
@@ -73,7 +74,7 @@ class DepEmpService:
             setattr(dep_emp, field, value)
         try:
             return self.dao.update(dep_emp)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was not Possible To Update Data!')
 

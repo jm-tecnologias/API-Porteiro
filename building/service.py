@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from building.dao import BuildingDAO
 from building.model import BuildingModel, BuildingResponse
@@ -30,7 +31,7 @@ class BuildingService:
             setattr(building, field, value)
         try:
             return self.dao.update(building)
-        except InterruptedError:
+        except SQLAlchemyError:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was not possible to update data.')
 
     def find_all_buildings(self) -> list[BuildingResponse]:

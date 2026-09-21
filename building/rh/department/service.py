@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from building.dao import BuildingDAO
 from building.database.schemas.department_schema import DepartmentSchema
@@ -23,7 +24,7 @@ class DepartmentService:
         )
         try:
             department = self.dao.create(new)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                                 detail='Data Structure Not Valid')
@@ -38,7 +39,7 @@ class DepartmentService:
             setattr(department, field, value)
         try:
             return self.dao.update(department)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible To Update Data')
 

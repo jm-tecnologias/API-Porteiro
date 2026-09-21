@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from building.address.dao import AddressDAO
@@ -36,7 +37,7 @@ class AddressService:
 
         try:
             return self.dao.update(address)
-        except InterruptedError:
+        except SQLAlchemyError:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible To Update Data!')
 
     def find_building_address(self, building_id: int) -> AddressResponse | None:

@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from building.contact.dao import ContactDAO
@@ -56,7 +57,7 @@ class ContactService:
             setattr(contact, field, value)
         try:
             return self.dao.update(contact)
-        except InterruptedError:
+        except SQLAlchemyError:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible To Update Data')
 
     def find_all(self, building_id: int, skip: int, limit: int, status: bool = None) -> list[ContactResponse]:

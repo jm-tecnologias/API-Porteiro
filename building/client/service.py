@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from building.client.dao import ClientDAO
@@ -25,7 +26,7 @@ class ClientService:
         )
         try:
             return self.dao.create(new)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Data Structure Not Valid!')
 
@@ -38,7 +39,7 @@ class ClientService:
             setattr(client, field, value)
         try:
             return self.dao.update(client)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                                 detail='Was Not Possible To Update Data!')

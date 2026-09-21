@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from building.auth.create_profile.dao import ProfileDAO
@@ -28,7 +29,7 @@ class ProfileService:
 
         try:
             return self.dao.update(profile)
-        except InterruptedError:
+        except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                                 detail='Was Not Possible To Update Data!')
