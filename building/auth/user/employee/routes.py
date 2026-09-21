@@ -5,7 +5,7 @@ from building.auth.user.employee.model import UserEmployeeModel, ModelLogin, Use
 from building.auth.user.employee.service import UserEmployeeService
 from utils.database import get_database
 
-employee_user_router = APIRouter(prefix='/building/auth/employee', tags=['Authentication', 'Login'])
+employee_user_router = APIRouter(prefix='/building/auth/user/employee', tags=['Authentication', 'Login'])
 
 
 def get_service(database: Session = Depends(get_database)) -> UserEmployeeService:

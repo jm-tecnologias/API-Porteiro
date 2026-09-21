@@ -20,3 +20,5 @@ async def get_clients(service: ClientService = Depends(get_service)) -> list[Cli
 @client_router.post('/register', response_model=ClientResponse, status_code=status.HTTP_201_CREATED)
 async def create(model: ClientModel, service: ClientService = Depends(get_service)) -> ClientResponse:
     return service.create(model)
+
+
