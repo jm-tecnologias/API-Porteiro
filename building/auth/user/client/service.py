@@ -81,8 +81,10 @@ class UserMemberService:
         # )
         # return login
 
-    def populate_dashboard(self, user_id: int) -> DashboardResponse:
-        data = self.dao.load_dashboard(user_id)
+    def populate_dashboard(self, user_id: str) -> DashboardResponse:
+        logged_user = self.verify_token(user_id)
+        # Tratamento de erro se o login nao existir
+        data = self.dao.load_dashboard(logged_user.id)
         if data is None:
             return None
         user, member, apartment, building, contact, address = data
@@ -192,6 +194,8 @@ class UserMemberService:
 # database = SessionLocal()
 # try:
 #     service = UserMemberService(database)
+#     to = service.verify_token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidHlwZSI6ImFjY2VzcyIsImV4cCI6MTc5MDAwNzA5MSwiaWF0IjoxNzkwMDA1MjkxfQ.p3FiAHJ7JGR_ts85PFtwN42GITDUU__mTm7zf3NOZvU')
+#     print('Result: ', to.username)
 #     data = UserMemberModel(
 #         username="Client",
 #         password="Informatico@12",
