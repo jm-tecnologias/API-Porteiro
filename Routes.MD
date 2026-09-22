@@ -2,7 +2,6 @@
 As rotas aqui apresentadas serão divididas em categorias
 
 ## Rotas de autenticação
-### Rotas de cliente
 building/auth/user/client
 
       /login

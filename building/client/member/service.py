@@ -1,6 +1,8 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
+
+from building.auth.user.client.service import UserMemberService
 from building.client.member.dao import MemberDAO
 from building.client.member.model import MemberResponse, MemberModel
 from building.database.schemas import MemberSchema
@@ -9,6 +11,7 @@ from building.database.schemas import MemberSchema
 class MemberService:
     def __init__(self, database: Session):
         self.dao = MemberDAO(database)
+        self.user_member_service = UserMemberService(database)
 
     def create(self, model: MemberModel) -> MemberResponse:
         member = self.dao.find_by_name(model.name)
@@ -35,6 +38,22 @@ class MemberService:
 
     def update(self, member_id: int, member_data: MemberModel) -> MemberResponse:
         member = self.dao.find_by_id(member_id)
+        if not member:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Member Not Found!')
+        data = member_data.model_dump(exclude_unset=True)
+        for field, value in data.items():
+            setattr(member, field, value)
+        try:
+            return self.dao.update(member)
+        except SQLAlchemyError:
+            self.dao.rollback()
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+                                detail='Was Not Possible To Update Data!')
+
+    def update_by_logged_client(self, token: str, member_data: MemberModel) -> MemberResponse:
+        user = self.user_member_service.verify_token(token)
+
+        member = self.dao.find_by_id(user.member_id)
         if not member:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Member Not Found!')
         data = member_data.model_dump(exclude_unset=True)
