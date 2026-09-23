@@ -1,14 +1,10 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
+
 from building.auth.user.client.dao import UserMemberDAO
-from building.auth.user.client.model import UserMemberModel, UserMemberResponse, LoginResponse, TokenResponse, \
-    DashboardResponse, DashboardUserResponse, DashboardMemberResponse, DashboardApartmentResponse, \
-    DashboardBuildingResponse, DashboardContactResponse, DashboardAddressResponse
+from building.auth.user.client.model import UserMemberModel, UserMemberResponse, LoginResponse, TokenResponse
 from building.client.member.dao import MemberDAO
 from building.database.schemas.member_user_schema import UserMemberSchema
-from typing import TypeVar, Generic, Type
-T = TypeVar("T")
-
 from jose import jwt, JWTError
 import bcrypt
 from datetime import datetime, timedelta, timezone
@@ -43,7 +39,8 @@ class UserMemberService:
             status=user_data.status,
             member_id=user_data.member_id,
             password=self._hash_password(user_data.password),
-            username=user_data.username
+            username=user_data.username,
+            profile_pic_url=user_data.profile_pic_url
         )
         return self.dao.create(new)
 
@@ -81,62 +78,62 @@ class UserMemberService:
         # )
         # return login
 
-    def populate_dashboard(self, user_id: str) -> DashboardResponse:
-        logged_user = self.verify_token(user_id)
-        # Tratamento de erro se o login nao existir
-        data = self.dao.load_dashboard(logged_user.id)
-        if data is None:
-            return None
-        user, member, apartment, building, contact, address = data
-        return DashboardResponse(
-            user=DashboardUserResponse(
-                id=user.id,
-                username=user.username,
-                description=user.description,
-                status=user.status
-            ),
-            member=DashboardMemberResponse(
-                id=member.id,
-                doc_id=member.doc_id,
-                name=member.name,
-                surname=member.surname,
-                phone=member.phone,
-                email=member.email,
-                description=member.description,
-                status=member.status
-            ),
-            apartment=DashboardApartmentResponse(
-                id=apartment.id,
-                floor=apartment.floor,
-                number=apartment.number,
-                type=apartment.type,
-                description=apartment.description,
-                status=apartment.status,
-                occupation_state=apartment.occupation_state
-            ),
-            building=DashboardBuildingResponse(
-                id=building.id,
-                name=building.name,
-                status=building.status,
-                description=building.description
-            ),
-            contact=DashboardContactResponse(
-                id=contact.id,
-                phone=contact.phone,
-                email=contact.email,
-                website=contact.website,
-                status=contact.status
-            ),
-            address=DashboardAddressResponse(
-                id=address.id,
-                province=address.province,
-                city=address.city,
-                nearby_hood=address.nearby_hood,
-                avenue=address.avenue,
-                number=address.number,
-                status=address.status
-            )
-        )
+    # def populate_dashboard(self, user_id: str) -> DashboardResponse:
+    #     logged_user = self.verify_token(user_id)
+    #     # Tratamento de erro se o login nao existir
+    #     data = self.dao.load_dashboard(logged_user.id)
+    #     if data is None:
+    #         return None
+    #     user, member, apartment, building, contact, address = data
+    #     return DashboardResponse(
+    #         user=UserMemberResponse(
+    #             id=user.id,
+    #             username=user.username,
+    #             description=user.description,
+    #             status=user.status
+    #         ),
+    #         member=MemberResponse(
+    #             id=member.id,
+    #             doc_id=member.doc_id,
+    #             name=member.name,
+    #             surname=member.surname,
+    #             phone=member.phone,
+    #             email=member.email,
+    #             description=member.description,
+    #             status=member.status
+    #         ),
+    #         apartment=ApartmentResponse(
+    #             id=apartment.id,
+    #             floor=apartment.floor,
+    #             number=apartment.number,
+    #             type=apartment.type,
+    #             description=apartment.description,
+    #             status=apartment.status,
+    #             occupation_state=apartment.occupation_state
+    #         ),
+    #         building=BuildingResponse(
+    #             id=building.id,
+    #             name=building.name,
+    #             status=building.status,
+    #             description=building.description
+    #         ),
+    #         contact=ContactResponse(
+    #             id=contact.id,
+    #             phone=contact.phone,
+    #             email=contact.email,
+    #             website=contact.website,
+    #             status=contact.status
+    #         ),
+    #         address=AddressResponse(
+    #             id=address.id,
+    #             province=address.province,
+    #             city=address.city,
+    #             nearby_hood=address.nearby_hood,
+    #             avenue=address.avenue,
+    #             number=address.number,
+    #             status=address.status
+    #         )
+    #     )
 
     @staticmethod
     def _hash_password(password: str) -> str:

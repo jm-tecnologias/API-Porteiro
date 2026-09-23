@@ -1,11 +1,18 @@
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Request
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
+from building.address.model import AddressResponse
+from building.apartment.model import ApartmentResponse
+from building.auth.user.client.model import UserMemberResponse
 from building.auth.user.client.service import UserMemberService
+from building.barcode_service import BarcodeService
+from building.client.member.MemberDashboardResponse import DashboardResponse
 from building.client.member.dao import MemberDAO
 from building.client.member.model import MemberResponse, MemberModel
+from building.contact.model import ContactResponse
 from building.database.schemas import MemberSchema
+from building.model import BuildingResponse
 
 
 class MemberService:
@@ -28,10 +35,15 @@ class MemberService:
             phone=model.phone,
             email=model.email,
             client_relationship=model.client_relationship,
-            description=model.description
+            description=model.description,
+            profile_pic_url=model.profile_pic_url
         )
         try:
-            return self.dao.create(new)
+            new_member = self.dao.create(new)
+            if new_member:
+                BarcodeService.generate_barcode('M', new_member.id)
+            return new_member
+
         except SQLAlchemyError:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible TO Add Data!')
@@ -49,6 +61,65 @@ class MemberService:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                                 detail='Was Not Possible To Update Data!')
+
+    def populate_dashboard(self, user_id: str, url_req: str) -> DashboardResponse:
+        logged_user = self.user_member_service.verify_token(user_id)
+        # Tratamento de erro se o login nao existir
+        data = self.user_member_service.dao.load_dashboard(logged_user.id)
+        if data is None:
+            return None
+        user, member, apartment, building, contact, address = data
+        return DashboardResponse(
+            user=UserMemberResponse(
+                id=user.id,
+                username=user.username,
+                description=user.description,
+                status=user.status
+            ),
+            member=MemberResponse(
+                id=member.id,
+                doc_id=member.doc_id,
+                name=member.name,
+                surname=member.surname,
+                phone=member.phone,
+                email=member.email,
+                description=member.description,
+                status=member.status,
+                # barcode_url=url_req
+                barcode_url=(url_req.rstrip('/') + f"/media/barcodes/M-{member.id:013d}.png")
+            ),
+            apartment=ApartmentResponse(
+                id=apartment.id,
+                floor=apartment.floor,
+                number=apartment.number,
+                type=apartment.type,
+                description=apartment.description,
+                status=apartment.status,
+                occupation_state=apartment.occupation_state
+            ),
+            building=BuildingResponse(
+                id=building.id,
+                name=building.name,
+                status=building.status,
+                description=building.description
+            ),
+            contact=ContactResponse(
+                id=contact.id,
+                phone=contact.phone,
+                email=contact.email,
+                website=contact.website,
+                status=contact.status
+            ),
+            address=AddressResponse(
+                id=address.id,
+                province=address.province,
+                city=address.city,
+                nearby_hood=address.nearby_hood,
+                avenue=address.avenue,
+                number=address.number,
+                status=address.status
+            )
+        )
 
     def update_by_logged_client(self, token: str, member_data: MemberModel) -> MemberResponse:
         user = self.user_member_service.verify_token(token)

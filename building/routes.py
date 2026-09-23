@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
-from building.model import BuildingModel, BuildingResponse
+from building.model import BuildingModel, BuildingResponse, BuildingResponseMoreDetails
 from building.service import BuildingService
 from utils.database import get_database
 
@@ -27,6 +27,6 @@ async def list_buildings(service: BuildingService = Depends(get_build_service)) 
     return service.find_all_buildings()
 
 
-@building_router.get('/get/{building_id}', response_model=BuildingResponse, status_code=status.HTTP_200_OK)
-async def get(building_id: int, service: BuildingService = Depends(get_build_service)) -> BuildingResponse:
+@building_router.get('/get/{building_id}', response_model=BuildingResponseMoreDetails, status_code=status.HTTP_200_OK)
+async def get(building_id: int, service: BuildingService = Depends(get_build_service)) -> BuildingResponseMoreDetails:
     return service.get_building(building_id)

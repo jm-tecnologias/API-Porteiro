@@ -1,5 +1,7 @@
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
 
 from building.address.routes import address_router
@@ -24,6 +26,10 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Building-Management", version="1.0.0", lifespan=lifespan)
+
+# para disponivilizar as imagens de codigo de barras
+app.mount('/media',
+          StaticFiles(directory='media'), name='media')
 
 app.add_middleware(
     CORSMiddleware,

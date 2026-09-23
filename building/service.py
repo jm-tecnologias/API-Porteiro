@@ -2,7 +2,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from building.dao import BuildingDAO
-from building.model import BuildingModel, BuildingResponse
+from building.model import BuildingModel, BuildingResponse, BuildingResponseMoreDetails
 from building.database.schemas.building_schema import BuildingSchema
 
 
@@ -38,7 +38,7 @@ class BuildingService:
         buildings = self.dao.find_all()
         return buildings
 
-    def get_building(self, building_id: int) -> BuildingResponse:
+    def get_building(self, building_id: int) -> BuildingResponseMoreDetails:
         return self.dao.find_by_id(building_id)
 
 

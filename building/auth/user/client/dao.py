@@ -9,7 +9,6 @@ from typing import TypeVar
 T = TypeVar("T")
 
 
-
 class UserMemberDAO(BaseDAO[UserMemberSchema]):
     def __init__(self, database: Session):
         super().__init__(

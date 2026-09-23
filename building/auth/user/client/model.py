@@ -4,11 +4,12 @@ from typing import Optional
 
 
 class UserMemberModel(BaseModel):
-    username: str | None = None
-    password: str | None = None
-    description: str | None = None
-    member_id: int | None = None
-    status: bool | None = None
+    username: Optional[str] = None
+    password: Optional[str] = None
+    description: Optional[str] = None
+    member_id: Optional[int] = None
+    status: Optional[bool] = None
+    profile_pic_url: Optional[str] = None
 
 
 class LoginResponse(BaseModel):
@@ -27,52 +28,52 @@ class TokenResponse(BaseModel):
 
 
 class UserMemberResponse(UserMemberModel):
-    id: int
-    created_at: datetime
-    updated_at: datetime
-
-
-class DashboardUserResponse(BaseModel):
     id: Optional[int] = None
-    username: Optional[str] = None
-    description: Optional[str] = None
-    status: Optional[bool] = None
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
 
 
-class DashboardMemberResponse(BaseModel):
-    id: Optional[int] = None
-    name: Optional[str] = None
-    surname: Optional[str] = None
-    doc_id: Optional[str] = None
-    phone: Optional[str] = None
-    email: Optional[str] = None
-    description: Optional[str] = None
-    status: Optional[bool] = None
+# class DashboardUserResponse(BaseModel):
+#     id: Optional[int] = None
+#     username: Optional[str] = None
+#     description: Optional[str] = None
+#     status: Optional[bool] = None
 
 
-class DashboardApartmentResponse(BaseModel):
-    id: Optional[int] = None
-    floor: Optional[str] = None
-    number: Optional[str] = None
-    type: Optional[str] = None
-    description: Optional[str] = None
-    occupation_state: Optional[str] = None
-    status: Optional[bool] = None
+# class DashboardMemberResponse(BaseModel):
+#     id: Optional[int] = None
+#     name: Optional[str] = None
+#     surname: Optional[str] = None
+#     doc_id: Optional[str] = None
+#     phone: Optional[str] = None
+#     email: Optional[str] = None
+#     description: Optional[str] = None
+#     status: Optional[bool] = None
 
 
-class DashboardBuildingResponse(BaseModel):
-    id: Optional[int] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    status: Optional[bool] = None
+# class DashboardApartmentResponse(BaseModel):
+#     id: Optional[int] = None
+#     floor: Optional[str] = None
+#     number: Optional[str] = None
+#     type: Optional[str] = None
+#     description: Optional[str] = None
+#     occupation_state: Optional[str] = None
+#     status: Optional[bool] = None
 
 
-class DashboardContactResponse(BaseModel):
-    id: Optional[int] = None
-    phone: Optional[str] = None
-    email: Optional[str] = None
-    website: Optional[str] = None
-    status: Optional[bool] = None
+# class DashboardBuildingResponse(BaseModel):
+#     id: Optional[int] = None
+#     name: Optional[str] = None
+#     description: Optional[str] = None
+#     status: Optional[bool] = None
+
+
+# class DashboardContactResponse(BaseModel):
+#     id: Optional[int] = None
+#     phone: Optional[str] = None
+#     email: Optional[str] = None
+#     website: Optional[str] = None
+#     status: Optional[bool] = None
 
 
 class DashboardAddressResponse(BaseModel):
@@ -85,10 +86,10 @@ class DashboardAddressResponse(BaseModel):
     status: Optional[bool] = None
 
 
-class DashboardResponse(BaseModel):
-    user: DashboardUserResponse
-    member: DashboardMemberResponse
-    apartment: DashboardApartmentResponse
-    building: DashboardBuildingResponse
-    contact: DashboardContactResponse
-    address: DashboardAddressResponse
+# class DashboardResponse(BaseModel):
+    # user: DashboardUserResponse
+    # member: DashboardMemberResponse
+    # apartment: DashboardApartmentResponse
+    # building: DashboardBuildingResponse
+    # contact: DashboardContactResponse
+    # address: DashboardAddressResponse

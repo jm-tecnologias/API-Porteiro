@@ -1,2 +1,5 @@
-teste = "2026-09-21T22:37:39"
-print(teste.replace('T', ' '))
+from builtins import print
+
+model_id = 123
+code = f"RES-{model_id:013d}"
+print(code)
