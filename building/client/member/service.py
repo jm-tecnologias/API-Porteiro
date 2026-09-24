@@ -10,6 +10,7 @@ from building.barcode_service import BarcodeService
 from building.client.member.MemberDashboardResponse import DashboardResponse
 from building.client.member.dao import MemberDAO
 from building.client.member.model import MemberResponse, MemberModel
+from building.client.member.visitor.model import VisitorResponse
 from building.contact.model import ContactResponse
 from building.database.schemas import MemberSchema
 from building.model import BuildingResponse
@@ -69,6 +70,22 @@ class MemberService:
         if data is None:
             return None
         user, member, apartment, building, contact, address = data
+        # visitors = []
+        # for visitor in member.visitors:
+        #     visitor_response = VisitorResponse(
+        #         id=visitor.id,
+        #         member_id=visitor.member_id,
+        #         name=visitor.name,
+        #         phone=visitor.phone,
+        #         date=visitor.date,
+        #         time=visitor.time,
+        #         status=visitor.status,
+        #         description=visitor.description,
+        #         token=visitor.token
+        #     )
+        #     visitors.append(visitor_response)
+        # print('Visitors: ', visitors)
+
         return DashboardResponse(
             user=UserMemberResponse(
                 id=user.id,
@@ -85,6 +102,7 @@ class MemberService:
                 email=member.email,
                 description=member.description,
                 status=member.status,
+                visitors=member.visitors,
                 # barcode_url=url_req
                 barcode_url=(url_req.rstrip('/') + f"/media/barcodes/M-{member.id:013d}.png")
             ),

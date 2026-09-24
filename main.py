@@ -9,6 +9,7 @@ from building.apartment.routes import apartment_router
 from building.auth.user.client.routes import client_user_router
 from building.auth.user.employee.routes import employee_user_router
 from building.client.member.routes import member_router
+from building.client.member.visitor.routes import visitor_router
 from building.client.routes import client_router
 from building.contact.routes import contact_router
 from building.occupational_historic.routes import historic_router
@@ -57,4 +58,4 @@ app.include_router(client_user_router)
 app.include_router(client_router)
 app.include_router(historic_router)
 app.include_router(member_router)
-
+app.include_router(visitor_router)

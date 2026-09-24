@@ -32,7 +32,7 @@ class MemberResponse(MemberModel):
     token: Optional[str] = None
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
-    visitors: Optional[list[VisitorResponse]] = Field(default_factory=list)
+    visitors: list[VisitorResponse] = Field(default_factory=list)
     model_config = ConfigDict(
         from_attributes=True
     )

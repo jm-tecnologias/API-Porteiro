@@ -1,15 +1,18 @@
-from datetime import datetime, date, time
+from datetime import datetime
+from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict
 
 
 class VisitorCheckInOutModel(BaseModel):
-    visitor_id: int | None = None
-    user_id: int | None = None
-    status: str | None = None
-    note: str | None = None
+    visitor_id: Optional[int] = None
+    user_id: Optional[int] = None
+    status: Optional[str] = None
+    note: Optional[str] = None
 
 
 class VisitorCheckInOutResponse(VisitorCheckInOutModel):
-    created_at: datetime
-
+    created_at: Optional[datetime] = None
+    model_config = ConfigDict(
+        from_attributes=True
+    )

@@ -31,14 +31,4 @@ class BuildingResponse(BuildingModel):
 
 
 class BuildingResponseMoreDetails(BuildingResponse):
-    # id: Optional[int] = None
-    # created_at: Optional[datetime] = None
-    # updated_at: Optional[datetime] = None
-    # contacts: Optional[list[ContactResponse]] = Field(default_factory=list)
-    # departments: Optional[list[DepartmentResponse]] = Field(default_factory=list)
-    # employees: Optional[list[EmployeeResponse]] = Field(default_factory=list)
-    # apartments: Optional[list[ApartmentResponse]] = Field(default_factory=list)
     clients: Optional[list[ClientWithMembersResponse]] = Field(default_factory=list)
-    # model_config = ConfigDict(
-    #     from_attributes=True
-    # )

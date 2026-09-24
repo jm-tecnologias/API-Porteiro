@@ -38,7 +38,7 @@ class MemberSchema(Base):
     visitors = relationship(
         "VisitorSchema",
         back_populates="member",
-        order_by="VisitorSchema.created_at.asc()",
+        order_by="VisitorSchema.created_at.desc()",
         cascade="all, delete-orphan",
     )
 
