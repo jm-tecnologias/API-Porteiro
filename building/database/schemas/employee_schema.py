@@ -7,10 +7,10 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 class EmployeeSchema(Base):
     __tablename__ = 'employee'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    code = Column("code", String, nullable=False, unique=True)
-    name = Column("name", String, nullable=False)
-    surname = Column("surname", String, nullable=False)
-    description = Column("description", String, nullable=True)
+    code = Column("code", String(10), nullable=False, unique=True)
+    name = Column("name", String(30), nullable=False)
+    surname = Column("surname", String(50), nullable=False)
+    description = Column("description", String(1000), nullable=True)
     building_id = Column("building_id", Integer, ForeignKey("building.id"), nullable=False)
     status = Column("status", Boolean, nullable=False, default=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now)

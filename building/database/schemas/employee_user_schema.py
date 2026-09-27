@@ -8,9 +8,9 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 class UserEmployeeSchema(Base):
     __tablename__ = 'employee_user'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    username = Column("username", String, nullable=False)
-    password = Column("password", String, nullable=False)
-    description = Column("description", String, nullable=True)
+    username = Column("username", String(15), nullable=False)
+    password = Column("password", String(500), nullable=False)
+    description = Column("description", String(1000), nullable=True)
     employee_id = Column("employee_id", Integer, ForeignKey("employee.id"), nullable=False)
     # profile_id = Column("profile_id", Integer, ForeignKey("create_profile.id"), nullable=False)
     status = Column("status", Boolean, nullable=False, default=True)

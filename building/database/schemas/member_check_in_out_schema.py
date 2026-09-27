@@ -8,8 +8,8 @@ class MemberCheckInOutSchema(Base):
     __tablename__ = 'member_check_in_out'
     member_id = Column("member_id", Integer, ForeignKey("member.id"), nullable=False, primary_key=True)
     user_id = Column("user_id", Integer, ForeignKey("employee_user.id"), nullable=False, primary_key=True)
-    status = Column("status", String, nullable=False)  # ENUM('Check In', 'Check Out')
-    note = Column("note", String, nullable=True)
+    status = Column("status", String(40), nullable=False)  # ENUM('Check In', 'Check Out')
+    note = Column("note", String(1000), nullable=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now, primary_key=True)
     updated_at = Column("updated_at", DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
     member = relationship(

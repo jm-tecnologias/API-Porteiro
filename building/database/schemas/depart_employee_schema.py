@@ -7,10 +7,10 @@ class DepartmentEmployeeSchema(Base):
     __tablename__ = 'department_employee'
     department_id = Column("department_id", Integer, ForeignKey("department.id"), nullable=False, primary_key=True)
     employee_id = Column("employee_id", Integer, ForeignKey("employee.id"), nullable=False, primary_key=True)
-    position = Column("position", String, nullable=False)
+    position = Column("position", String(50), nullable=False)
     initial_date = Column("initial_date", Date, nullable=False)
     final_date = Column("final_date", Date, nullable=True)
-    description = Column("description", String, nullable=True)
+    description = Column("description", String(1000), nullable=True)
     status = Column("status", Boolean, nullable=False, default=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now, primary_key=True)
     updated_at = Column("updated_at", DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)

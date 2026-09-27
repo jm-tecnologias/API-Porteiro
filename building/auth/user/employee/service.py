@@ -151,15 +151,15 @@ class UserEmployeeService:
 # database = SessionLocal()
 # try:
 #     service = UserEmployeeService(database)
-    #     data = UserModel(
-    #         username="Admin",
-    #         password="Informatico@12",
-    #         description="Test User",
-    #         employee_id=1,
-    #         # profile_id=2,
-    #         status=True
-    #     )
-    #     user = service.create(data)
-    # print(service.get_user_login('Admin', 'Informatico@12'))
+#     data = UserEmployeeModel(
+#         username="Admin",
+#         password="Informatico@12",
+#         description="Test User",
+#         employee_id=1,
+#         # profile_id=2,
+#         status=True
+#     )
+#     user = service.create(data)
+#     print(service.get_user_login('Admin', 'Informatico@12'))
 # finally:
 #     database.close()

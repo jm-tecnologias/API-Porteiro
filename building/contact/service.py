@@ -78,7 +78,7 @@ class ContactService:
 # try:
 #     service = ContactService(database)
 #     data = ContactModel(
-#         phone='800793',
+#         phone='+258847100793',
 #         email='comarcial@jm-tecnologias.co.mz',
 #         website='www.jm-tecnologias.co.mz',
 #         building_id=1,

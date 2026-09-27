@@ -13,7 +13,7 @@ class HistoricSchema(Base):
     num_members = Column("num_members", Integer, nullable=False, default=1)
     occupational_date = Column("occupational_date", Date, nullable=False)
     final_date = Column("final_date", Date, nullable=True)
-    description = Column("description", String, nullable=True)
+    description = Column("description", String(1000), nullable=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now, primary_key=True)
     updated_at = Column("updated_at", DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
     client = relationship(

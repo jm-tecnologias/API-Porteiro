@@ -8,9 +8,9 @@ class ClientSchema(Base):
     __tablename__ = 'client'
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column("user_id", Integer, ForeignKey("employee_user.id"), nullable=False)
-    surname = Column("surname", String, nullable=True)
+    surname = Column("surname", String(40), nullable=True)
     num_members = Column("num_members", Integer, nullable=False, default=1)
-    description = Column("description", String, nullable=True)
+    description = Column("description", String(1000), nullable=True)
     building_id = Column("building_id", Integer, ForeignKey("building.id"), nullable=False)
     status = Column("status", Boolean, nullable=False, default=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now)

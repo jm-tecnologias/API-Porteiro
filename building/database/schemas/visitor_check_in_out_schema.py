@@ -10,8 +10,8 @@ class VisitorCheckInOutSchema(Base):
     visitor_id = Column("visitor_id", Integer, ForeignKey("visitor.id"), nullable=False, primary_key=True)
     user_id = Column("user_id", Integer, ForeignKey("employee_user.id"), nullable=False, primary_key=True)
     # ENUM('Check In', 'Check Out', 'Saida Solicitada')
-    status = Column("status", String, nullable=False, default="Check In")
-    note = Column("note", String, nullable=True)
+    status = Column("status", String(30), nullable=False, default="Check In")
+    note = Column("note", String(1000), nullable=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now, primary_key=True)
     visitor = relationship(
         "VisitorSchema",

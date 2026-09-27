@@ -7,8 +7,8 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 class BuildingSchema(Base):
     __tablename__ = "building"
     id = Column("id", Integer, primary_key=True, autoincrement=True)
-    name = Column("name", String, nullable=False)
-    description = Column("description", String, nullable=True)
+    name = Column("name", String(30), nullable=False)
+    description = Column("description", String(1000), nullable=True)
     status = Column("status", Boolean, default=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now)
     updated_at = Column("updated_at", DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
@@ -51,9 +51,9 @@ class BuildingSchema(Base):
 class ContactSchema(Base):
     __tablename__ = 'contact'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    phone = Column("phone", String, nullable=False, unique=True)
-    email = Column("email", String, nullable=True)
-    website = Column("website", String, nullable=True)
+    phone = Column("phone", String(30), nullable=False, unique=True)
+    email = Column("email", String(50), nullable=True)
+    website = Column("website", String(100), nullable=True)
     building_id = Column("building_id", Integer, ForeignKey("building.id"), nullable=False)
     status = Column("status", Boolean, nullable=False, default=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now)
@@ -74,11 +74,11 @@ class AddressSchema(Base):
     __tablename__ = 'address'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    province = Column("province", String, nullable=False)
-    city = Column("city", String, nullable=False)
-    nearby_hood = Column("nearby_hood", String, nullable=True)
-    avenue = Column("avenue", String, nullable=True)
-    number = Column("number", String, nullable=True)
+    province = Column("province", String(40), nullable=False)
+    city = Column("city", String(40), nullable=False)
+    nearby_hood = Column("nearby_hood", String(100), nullable=True)
+    avenue = Column("avenue", String(100), nullable=True)
+    number = Column("number", String(60), nullable=True)
     building_id = Column("building_id", Integer, ForeignKey("building.id"), nullable=False)
     status = Column("status", Boolean, nullable=False, default=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now)

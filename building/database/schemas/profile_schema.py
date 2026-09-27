@@ -4,10 +4,10 @@ from sqlalchemy import Column, Integer, String, DateTime, Boolean
 
 
 class ProfileSchema(Base):
-    __tablename__ = "create_profile"
+    __tablename__ = "profile"
     id = Column("id", Integer, primary_key=True, index=True)
-    profile = Column("create_profile", String, nullable=False)
-    description = Column("description", String, nullable=True)
+    profile = Column("profile", String(100), nullable=False)
+    description = Column("description", String(1000), nullable=True)
     status = Column("status", Boolean, default=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now)
     updated_at = Column("updated_at", DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)

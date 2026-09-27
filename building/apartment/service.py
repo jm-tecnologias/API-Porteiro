@@ -56,10 +56,10 @@ class ApartmentService:
 # try:
 #     service = ApartmentService(database)
 #     ap = ApartmentModel(
-#         floor="5",
-#         number="A212",
-#         type="T2",
-#         description="Apartamento tipo 2 para casal",
+#         floor="20",
+#         number="A1",
+#         type="T4",
+#         description="Apartamento tipo 4 - Familia. todos quartos Suite, duas varandas, cozinha e copa. Sala de Jantar e de estar, um escritorio geral e um junto ao quarto peincipal",
 #         building_id=1,
 #     )
 #     ap = service.create(ap)

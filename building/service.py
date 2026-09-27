@@ -49,8 +49,8 @@ class BuildingService:
 # try:
 #     service = BuildingService(database)
 #     data = BuildingModel(
-#          name="JAT35",
-#          description="Dados de teste",
+#          name=" Edifício JM",
+#          description="Edifício residencial localizado...",
 #          status=True
 #     )
 #     build = service.create(data)

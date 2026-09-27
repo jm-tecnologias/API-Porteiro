@@ -11,13 +11,13 @@ class VisitorSchema(Base):
     __tablename__ = 'visitor'
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     member_id = Column("member_id", Integer, ForeignKey("member.id"), nullable=False)
-    name = Column("name", String, nullable=True)
-    phone = Column("phone", String, nullable=True)
+    name = Column("name", String(100), nullable=True)
+    phone = Column("phone", String(30), nullable=True)
     visitor_date = Column("visitor_date", Date, nullable=False)
     visitor_time = Column("visitor_time", Time, nullable=True)
     # 'Esperando Check In','Esperando Check Out', 'Visita Concluida', 'Convite Expirado', 'Convite Cancelado'
-    status = Column("status", String, nullable=False, default="Esperando Check In")
-    description = Column("description", String, nullable=True)
+    status = Column("status", String(50), nullable=False, default="Esperando Check In")
+    description = Column("description", String(1000), nullable=True)
     token = Column("token", String(64), nullable=False, unique=True, index=True,
                    default=lambda: secrets.token_urlsafe(24))
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now)

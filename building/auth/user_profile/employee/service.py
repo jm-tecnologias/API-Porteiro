@@ -24,16 +24,16 @@ class UserProfileEmployeeService:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible TO Add Data')
 
-# from utils.database import SessionLocal
-# from building.database import models
-# database = SessionLocal()
-# try:
-#     service = UserProfileEmployeeService(database)
-#     data = UserProfileModel(
-#         profile_id=3,
-#         employee_user_id=1,
-#     )
-#     service.create(data)
-#
-# finally:
-#     database.close()
+from utils.database import SessionLocal
+from building.database import models
+database = SessionLocal()
+try:
+    service = UserProfileEmployeeService(database)
+    data = UserProfileEmployeeModel(
+        profile_id=1,
+        employee_user_id=1,
+    )
+    service.create(data)
+
+finally:
+    database.close()
