@@ -30,7 +30,7 @@ class VisitorService:
 
         except SQLAlchemyError:
             self.dao.rollback()
-            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible TO Add Data!')
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Was Not Possible TO Add Data!')
 
 # from utils.database import SessionLocal
 # from building.database import models

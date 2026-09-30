@@ -68,6 +68,7 @@ class UserMemberService:
         # self.history_service.create_history(history_data)
 
         access_token = self.create_token(login.id, login)
+        print('TOKEN: ', access_token)
         return TokenResponse(
             access_token=access_token,
             token_type="bearer"
