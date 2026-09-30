@@ -27,18 +27,18 @@ class MemberCheckInOutService:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible To Add Data!')
 
 
-from utils.database import SessionLocal
-from building.database import models
-database = SessionLocal()
-try:
-    service = MemberCheckInOutService(database)
-    data = MemberCheckInOutModel(
-        member_id=1,
-        user_id=1,
-        status="Check Out",
-        note="Check Out Test",
-    )
-    service.create(data)
-
-finally:
-    database.close()
+# from utils.database import SessionLocal
+# from building.database import models
+# database = SessionLocal()
+# try:
+#     service = MemberCheckInOutService(database)
+#     data = MemberCheckInOutModel(
+#         member_id=1,
+#         user_id=1,
+#         status="Check Out",
+#         note="Check Out Test",
+#     )
+#     service.create(data)
+#
+# finally:
+#     database.close()

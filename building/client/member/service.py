@@ -185,7 +185,7 @@ class MemberService:
                 updated_at=me.updated_at,
                 visitors=me.visitors,
                 checkedStatus=me.checkedStatus
-        ),
+            ),
             apartment=ApartmentResponse(
                 floor=ap.floor,
                 number=ap.number,

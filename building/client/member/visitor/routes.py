@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
+from building.client.member.visitor.VisitorMemberApartmentResponse import VisitorMemberApartmentResponse
 from building.client.member.visitor.model import VisitorResponse, VisitorModel
 from building.client.member.visitor.service import VisitorService
 from utils.database import get_database
@@ -15,3 +16,12 @@ def get_service(database: Session = Depends(get_database)) -> VisitorService:
 @visitor_router.post('/register', response_model=VisitorResponse, status_code=status.HTTP_200_OK)
 async def create(model: VisitorModel, service: VisitorService = Depends(get_service)) -> VisitorResponse:
     return service.create(model)
+
+
+# ==============================
+# get visitor for portaria
+# ==============================
+@visitor_router.get('/get/{visitor_id}', response_model=VisitorMemberApartmentResponse,
+                    status_code=status.HTTP_200_OK)
+async def get_member(visitor_id: int, service: VisitorService = Depends(get_service)) -> VisitorMemberApartmentResponse:
+    return service.find_visitor(visitor_id)
