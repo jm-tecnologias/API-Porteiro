@@ -1,14 +1,9 @@
 from datetime import datetime
 from typing import Optional
-
 from pydantic import BaseModel, ConfigDict, Field
 
-# from building.address.model import AddressResponse
-# from building.apartment.model import ApartmentResponse
-# from building.auth.user.client.model import UserMemberResponse
+from building.check_in_out.member.model import MemberCheckInOutResponse
 from building.client.member.visitor.model import VisitorResponse
-# from building.contact.model import ContactResponse
-# from building.model import BuildingResponse
 
 
 class MemberModel(BaseModel):
@@ -33,6 +28,7 @@ class MemberResponse(MemberModel):
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
     visitors: list[VisitorResponse] = Field(default_factory=list)
+    checkStatus: list[MemberCheckInOutResponse] = Field(default_factory=list)
     model_config = ConfigDict(
         from_attributes=True
     )

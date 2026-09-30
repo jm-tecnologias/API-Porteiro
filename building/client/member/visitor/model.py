@@ -2,7 +2,8 @@ from datetime import datetime, date, time
 from typing import Optional
 
 from pydantic import BaseModel, ConfigDict, Field
-from building.client.check_in_out.visitor.model import VisitorCheckInOutResponse
+
+from building.check_in_out.visitor.model import VisitorCheckInOutResponse
 
 
 class VisitorModel(BaseModel):
