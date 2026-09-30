@@ -28,7 +28,7 @@ class MemberResponse(MemberModel):
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
     visitors: list[VisitorResponse] = Field(default_factory=list)
-    checkStatus: list[MemberCheckInOutResponse] = Field(default_factory=list)
+    checkedStatus: list[MemberCheckInOutResponse] = Field(default_factory=list)
     model_config = ConfigDict(
         from_attributes=True
     )

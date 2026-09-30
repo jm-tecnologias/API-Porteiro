@@ -1,3 +1,5 @@
+from builtins import print
+
 from fastapi import HTTPException, status, Request
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
@@ -8,6 +10,7 @@ from building.auth.user.client.model import UserMemberResponse
 from building.auth.user.client.service import UserMemberService
 from building.barcode_service import BarcodeService
 from building.client.member.MemberDashboardResponse import DashboardResponse
+from building.client.member.MemberApartmentResponse import MemberApartmentResponse
 from building.client.member.dao import MemberDAO
 from building.client.member.model import MemberResponse, MemberModel
 from building.client.member.visitor.model import VisitorResponse
@@ -158,25 +161,70 @@ class MemberService:
     def list_all(self) -> list[MemberResponse]:
         return self.dao.find_all()
 
+    def find_member(self, member_id: int) -> MemberApartmentResponse:
+        data = self.dao.find_member(member_id)
+        me, ap = data
+        return MemberApartmentResponse(
+            member=MemberResponse(
+                user_id=me.user_id,
+                client_id=me.client_id,
+                apartment_id=me.apartment_id,
+                doc_id=me.doc_id,
+                name=me.name,
+                surname=me.surname,
+                phone=me.phone,
+                email=me.email,
+                client_relationship=me.client_relationship,
+                description=me.description,
+                status=me.status,
+                profile_pic_url=me.profile_pic_url,
+                # barcode_url
+                id=me.id,
+                token=me.token,
+                created_at=me.created_at,
+                updated_at=me.updated_at,
+                visitors=me.visitors,
+                checkedStatus=me.checkedStatus
+        ),
+            apartment=ApartmentResponse(
+                floor=ap.floor,
+                number=ap.number,
+                type=ap.type,
+                description=ap.description,
+                occupation_state=ap.occupation_state,
+                building_id=ap.building_id,
+                status=ap.status,
+                id=ap.id,
+                created_at=ap.created_at,
+                updated_at=ap.updated_at
+            )
+        )
+
 
 # from utils.database import SessionLocal
 # from building.database import models
+#
 # database = SessionLocal()
 # try:
 #     service = MemberService(database)
-#     data = MemberModel(
-#         user_id=1,
-#         client_id=1,
-#         doc_id="110100692835M",
-#         apartment_id=1,
-#         name="Teste",
-#         surname="Mula",
-#         phone="878201953",
-#         email="email",
-#         client_relationship="Filho",
-#         description="Cliente membo de teste"
-#     )
-#     service.create(data)
-#
+    #     data = MemberModel(
+    #         user_id=1,
+    #         client_id=1,
+    #         doc_id="110100692835M",
+    #         apartment_id=1,
+    #         name="Teste",
+    #         surname="Mula",
+    #         phone="878201953",
+    #         email="email",
+    #         client_relationship="Filho",
+    #         description="Cliente membo de teste"
+    #     )
+    #     service.create(data)
+
+    # member = service.find_member(1)
+    # me, ap = member
+    # print('Member: ', me)
+    # print('Apartment: ', ap)
+
 # finally:
 #     database.close()

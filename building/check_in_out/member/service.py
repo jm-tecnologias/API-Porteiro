@@ -1,8 +1,8 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from building.occupational_historic.check_in_out.member.dao import MemberCheckInOutDAO
-from building.occupational_historic.check_in_out.member.model import MemberCheckInOutResponse, MemberCheckInOutModel
+from building.check_in_out.member.dao import MemberCheckInOutDAO
+from building.check_in_out.member.model import MemberCheckInOutModel, MemberCheckInOutResponse
 from building.database.schemas import MemberCheckInOutSchema
 
 
@@ -27,18 +27,18 @@ class MemberCheckInOutService:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible To Add Data!')
 
 
-# from utils.database import SessionLocal
-# from building.database import models
-# database = SessionLocal()
-# try:
-#     service = MemberCheckInOutService(database)
-#     data = MemberCheckInOutModel(
-#         member_id=1,
-#         user_id=1,
-#         status="Check In",
-#         note="Teste de nota",
-#     )
-#     service.create(data)
-#
-# finally:
-#     database.close()
+from utils.database import SessionLocal
+from building.database import models
+database = SessionLocal()
+try:
+    service = MemberCheckInOutService(database)
+    data = MemberCheckInOutModel(
+        member_id=1,
+        user_id=1,
+        status="Check Out",
+        note="Check Out Test",
+    )
+    service.create(data)
+
+finally:
+    database.close()

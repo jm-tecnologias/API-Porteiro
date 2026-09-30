@@ -1,10 +1,9 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
+from building.check_in_out.ordinary_visitor.dao import OrdinaryVisitorDAO
+from building.check_in_out.ordinary_visitor.model import OrdinaryVisitorModel, OrdinaryVisitorResponse
 from building.database.schemas import OrdinaryVisitorSchema
-from building.occupational_historic.check_in_out.ordinary_visitor.dao import OrdinaryVisitorDAO
-from building.occupational_historic.check_in_out.ordinary_visitor.model import OrdinaryVisitorResponse, \
-    OrdinaryVisitorModel
 
 
 class OrdinaryVisitorService:
