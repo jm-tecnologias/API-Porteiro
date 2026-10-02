@@ -7,6 +7,7 @@ from starlette.middleware.cors import CORSMiddleware
 from building.address.routes import address_router
 from building.apartment.routes import apartment_router
 from building.auth.user.employee.routes import employee_user_router
+from building.check_in_out.member.routes import admin_member_checkInOut_router
 from building.client.member.routes import admin_member_router
 from building.client.member.visitor.routes import admin_visitor_router
 from client.member.visitor.routes import visitor_router
@@ -59,6 +60,7 @@ app.include_router(apartment_router)
 app.include_router(employee_user_router)
 app.include_router(client_router)
 app.include_router(admin_member_router)
+app.include_router(admin_member_checkInOut_router)
 app.include_router(admin_visitor_router)
 app.include_router(historic_router)
 

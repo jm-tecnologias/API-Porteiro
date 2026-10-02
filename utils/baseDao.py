@@ -14,7 +14,7 @@ class BaseDAO(Generic[T]):
     def create(self, obj: T) -> T:
         self.database.add(obj)
         self.database.commit()
-        self.database.refresh(obj)
+        # self.database.refresh(obj)
         return obj
 
     def update(self, obj: T) -> T:
