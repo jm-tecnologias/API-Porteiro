@@ -7,6 +7,8 @@ from starlette.middleware.cors import CORSMiddleware
 from building.address.routes import address_router
 from building.apartment.routes import apartment_router
 from building.auth.user.employee.routes import employee_user_router
+from building.client.member.routes import admin_member_router
+from building.client.member.visitor.routes import admin_visitor_router
 from client.member.visitor.routes import visitor_router
 from building.client.routes import client_router
 from building.contact.routes import contact_router
@@ -46,6 +48,7 @@ def root():
     return {"Hello": "World"}
 
 
+# Rotas Administrativas
 app.include_router(building_router)
 app.include_router(contact_router)
 app.include_router(address_router)
@@ -55,11 +58,13 @@ app.include_router(depemp_router)
 app.include_router(apartment_router)
 app.include_router(employee_user_router)
 app.include_router(client_router)
+app.include_router(admin_member_router)
+app.include_router(admin_visitor_router)
 app.include_router(historic_router)
 
 # Rotas para aplicacao mobile do cliente
 # app.include_router(client_user_router)
-# app.include_router(member_router)
+# app.include_router(admin_member_router)
 # app.include_router(visitor_router)
 app.include_router(user_router)
 app.include_router(member_router)

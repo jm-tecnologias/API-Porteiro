@@ -1,21 +1,17 @@
-from fastapi import HTTPException, status, Request
+from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
-
 from building.apartment.model import ApartmentResponse
 from building.barcode_service import BarcodeService
 from building.client.member.MemberApartmentResponse import MemberApartmentResponse
 from building.client.member.dao import MemberDAO
 from building.client.member.model import MemberResponse, MemberModel
 from building.database.schemas import MemberSchema
-from client.auth.user.client.dao import UserMemberDAO
-from utils.auth_service import AuthService
 
 
 class MemberService:
     def __init__(self, database: Session):
         self.dao = MemberDAO(database)
-        self.auth_helper = AuthService(database=database, model=UserMemberDAO)
 
     def create(self, model: MemberModel) -> MemberResponse:
         member = self.dao.find_by_name(model.name)

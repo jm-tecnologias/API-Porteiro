@@ -6,22 +6,17 @@ from building.client.member.visitor.model import VisitorResponse, VisitorModel
 from building.client.member.visitor.service import VisitorService
 from utils.database import get_database
 
-visitor_router = APIRouter(prefix='/building/visitors', tags=['Buildings', 'Visitors'])
+admin_visitor_router = APIRouter(prefix='/building/visitors', tags=['Buildings', 'Visitors'])
 
 
 def get_service(database: Session = Depends(get_database)) -> VisitorService:
     return VisitorService(database)
 
 
-@visitor_router.post('/register', response_model=VisitorResponse, status_code=status.HTTP_200_OK)
-async def create(model: VisitorModel, service: VisitorService = Depends(get_service)) -> VisitorResponse:
-    return service.create(model)
-
-
 # ==============================
 # get visitor for portaria
 # ==============================
-@visitor_router.get('/get/{visitor_id}', response_model=VisitorMemberApartmentResponse,
+@admin_visitor_router.get('/get/{visitor_id}', response_model=VisitorMemberApartmentResponse,
                     status_code=status.HTTP_200_OK)
 async def get_member(visitor_id: int, service: VisitorService = Depends(get_service)) -> VisitorMemberApartmentResponse:
-    return service.find_visitor(visitor_id)
+    return service.scan_visitor(visitor_id)

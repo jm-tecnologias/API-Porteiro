@@ -1,7 +1,6 @@
 from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, ConfigDict, Field
-
 from building.check_in_out.member.model import MemberCheckInOutResponse
 from building.client.member.visitor.model import VisitorResponse
 

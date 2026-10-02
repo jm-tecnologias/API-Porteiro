@@ -5,7 +5,7 @@ from client.auth.user.client.model import TokenResponse, UserMemberModel
 from client.auth.user.client.service import UserMemberService
 from utils.database import get_database
 
-user_router = APIRouter(prefix='/building/auth/user/client', tags=['Authentication', 'login'])
+user_router = APIRouter(prefix='/client/auth/user', tags=['Authentication', 'login'])
 
 
 def get_service(database: Session = Depends(get_database)) -> UserMemberService:

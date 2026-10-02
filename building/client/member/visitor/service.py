@@ -15,27 +15,7 @@ class VisitorService:
     def __init__(self, database: Session):
         self.dao = VisitorDAO(database)
 
-    def create(self, visitor_model: VisitorModel) -> VisitorResponse:
-        new = VisitorSchema(
-            member_id=visitor_model.member_id,
-            name=visitor_model.name,
-            phone=visitor_model.phone,
-            visitor_date=visitor_model.visitor_date,
-            visitor_time=visitor_model.visitor_time,
-            description=visitor_model.description,
-        )
-
-        try:
-            new_visitor = self.dao.create(new)
-            if new_visitor:
-                BarcodeService.generate_barcode('V', new_visitor.id)
-            return new_visitor
-
-        except SQLAlchemyError:
-            self.dao.rollback()
-            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Was Not Possible TO Add Data!')
-
-    def find_visitor(self, visitor_id: int) -> VisitorMemberApartmentResponse:
+    def scan_visitor(self, visitor_id: int) -> VisitorMemberApartmentResponse:
         data = self.dao.find_visitor(visitor_id)
         vi, me, ap = data
         return VisitorMemberApartmentResponse(

@@ -6,7 +6,7 @@ from client.member.model import MemberModel, MemberResponse
 from client.member.service import MemberService
 from utils.database import get_database
 
-member_router = APIRouter(prefix='/building/clients/members', tags=['Buildings', 'Clients', 'Members'])
+member_router = APIRouter(prefix='/client/member', tags=['Buildings', 'Clients', 'Members'])
 
 
 def get_service(database: Session = Depends(get_database)) -> MemberService:

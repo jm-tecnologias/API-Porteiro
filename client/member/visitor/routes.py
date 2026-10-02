@@ -4,7 +4,7 @@ from client.member.visitor.model import VisitorResponse, VisitorModel
 from client.member.visitor.service import VisitorService
 from utils.database import get_database
 
-visitor_router = APIRouter(prefix='/building/visitors', tags=['Buildings', 'Visitors'])
+visitor_router = APIRouter(prefix='/client/member/visitor', tags=['Buildings', 'Visitors'])
 
 
 def get_service(database: Session = Depends(get_database)) -> VisitorService:
