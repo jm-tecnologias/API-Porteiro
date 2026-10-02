@@ -1,0 +1,37 @@
+from datetime import datetime
+from typing import Optional
+from pydantic import BaseModel, ConfigDict, Field
+
+from building.check_in_out.member.model import MemberCheckInOutResponse
+from building.client.member.visitor.model import VisitorResponse
+
+
+class MemberModel(BaseModel):
+    user_id: Optional[int] = None
+    client_id: Optional[int] = None
+    apartment_id: Optional[int] = None
+    doc_id: Optional[str] = None
+    name: Optional[str] = None
+    surname: Optional[str] = None
+    phone: Optional[str] = None
+    email: Optional[str] = None
+    client_relationship: Optional[str] = None
+    description: Optional[str] = None
+    status: Optional[bool] = None
+    profile_pic_url: Optional[str] = None
+    barcode_url: Optional[str] = None
+
+
+class MemberResponse(MemberModel):
+    id: Optional[int] = None
+    token: Optional[str] = None
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+    visitors: list[VisitorResponse] = Field(default_factory=list)
+    checkedStatus: list[MemberCheckInOutResponse] = Field(default_factory=list)
+    model_config = ConfigDict(
+        from_attributes=True
+    )
+
+
+
