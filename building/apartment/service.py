@@ -59,7 +59,8 @@ class ApartmentService:
 #         floor="20",
 #         number="A1",
 #         type="T4",
-#         description="Apartamento tipo 4 - Familia. todos quartos Suite, duas varandas, cozinha e copa. Sala de Jantar e de estar, um escritorio geral e um junto ao quarto peincipal",
+#         description="Apartamento tipo 4 - Familia. todos quartos Suite, duas varandas, cozinha e copa.
+#         Sala de Jantar e de estar, um escritorio geral e um junto ao quarto peincipal",
 #         building_id=1,
 #     )
 #     ap = service.create(ap)

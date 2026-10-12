@@ -1,28 +1,27 @@
-from typing import TypeVar, Generic, Type
-T = TypeVar("T")
-
 from fastapi import HTTPException, status
-from sqlalchemy.orm import Session
 from jose import jwt, JWTError
 import bcrypt
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 
 SECRET_KEY = str(os.getenv("SECRET_KEY"))
 ALGORITHM = str(os.getenv("ALGORITHM"))
 TOKEN_EXPIRE_MINUTES = str(os.getenv("TOKEN_EXPIRE_MINUTES"))
 
+if not SECRET_KEY:
+    raise RuntimeError("SECRET_KEY não foi configurada.")
+
 
 class AuthService:
-    def __init__(self, database: Session, model: Type[T]):
-        # self.database = database
-        self.model = model(database)
-
+    def __init__(self, database, dao_class):
+        # dao_class deve ser um DAO, por exemplo UserEmployeeDAO
+        self.dao = dao_class(database)
 
     @staticmethod
-    def _hash_password(password: str) -> str:
+    def hash_password(password: str) -> str:
         password_bytes = password.encode("utf-8")
         hashed_bytes = bcrypt.hashpw(
             password_bytes,
@@ -52,23 +51,31 @@ class AuthService:
         return jwt.encode(token_json, SECRET_KEY, ALGORITHM)
 
     def verify_token(self, token: str, expected_type: str = "access"):
+        credentials_exception = HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token inválido, expirado ou utilizador inexistente.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
             if payload.get("type") != expected_type:
-                raise ValueError
+                raise credentials_exception
+
             user_id = int(str(payload.get("sub")))
 
-            if user_id is None:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token without user ID")
-
-            # user_id = int(user_id)
-
         except (JWTError, TypeError, ValueError):
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token or expired")
+            raise credentials_exception
 
-        # user = self.dao.find_by_id(user_id)
-        user = self.model.find_by_id(user_id)
+        user = self.dao.find_by_id(user_id)
 
         if not user:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token user not found")
+            raise credentials_exception
+
+            # Ajusta esta regra se o campo status não for booleano.
+        if not user.status:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Utilizador desactivado."
+            )
+
         return user

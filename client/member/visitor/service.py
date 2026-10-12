@@ -24,9 +24,10 @@ class VisitorService:
         try:
             new_visitor = self.dao.create(new)
             if new_visitor:
-                BarcodeService.generate_barcode('V', new_visitor.id)
+                BarcodeService.generate_barcode('V', new_visitor.token)
             return new_visitor
 
         except SQLAlchemyError:
             self.dao.rollback()
-            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Was Not Possible TO Add Data!')
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+                                detail='Was Not Possible To Add Data!')

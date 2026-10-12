@@ -21,7 +21,8 @@ class ApartmentSchema(Base):
         back_populates="apartments",
     )
 
-    def __init__(self, floor: str, number: str, _type: str, description: str | None, occupation_state: str, building_id: int):
+    def __init__(self, floor: str, number: str, _type: str, description: str | None,
+                 occupation_state: str, building_id: int):
         self.floor = floor
         self.number = number
         self.type = _type

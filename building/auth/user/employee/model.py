@@ -26,8 +26,14 @@ class ModelLogin(BaseModel):
 
 
 class UserEmployee(BaseModel):
-    user: ModelLogin
-    employee: EmployeeResponse
+    userModel: ModelLogin
+    employeeModel: EmployeeResponse
+
+
+class LoginTokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: UserEmployee
 
 
 class UserEmployeeResponse(UserEmployeeModel):

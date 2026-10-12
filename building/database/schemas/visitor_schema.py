@@ -29,7 +29,7 @@ class VisitorSchema(Base):
     visitor_check_historic = relationship(
         "VisitorCheckInOutSchema",
         back_populates="visitor",
-        order_by="VisitorCheckInOutSchema.created_at.asc()",
+        order_by="VisitorCheckInOutSchema.created_at.desc()",
         cascade="all, delete-orphan",
     )
 

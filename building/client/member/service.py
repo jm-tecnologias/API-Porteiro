@@ -34,7 +34,7 @@ class MemberService:
         try:
             new_member = self.dao.create(new)
             if new_member:
-                BarcodeService.generate_barcode('M', new_member.id)
+                BarcodeService.generate_barcode('M', new_member.token)
             return new_member
 
         except SQLAlchemyError:
@@ -55,8 +55,8 @@ class MemberService:
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                                 detail='Was Not Possible To Update Data!')
 
-    def scan_member(self, member_id: int) -> MemberApartmentResponse:
-        data = self.dao.find_member(member_id)
+    def scan_member(self, token: str, url_req: str) -> MemberApartmentResponse:
+        data = self.dao.find_member(token)
         me, ap = data
         return MemberApartmentResponse(
             member=MemberResponse(
@@ -73,6 +73,7 @@ class MemberService:
                 status=me.status,
                 profile_pic_url=me.profile_pic_url,
                 # barcode_url
+                barcode_url=(url_req.rstrip('/') + f"/media/barcodes/M{me.token}.png"),
                 id=me.id,
                 token=me.token,
                 created_at=me.created_at,

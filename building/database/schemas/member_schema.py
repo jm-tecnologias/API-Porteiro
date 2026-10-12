@@ -32,7 +32,7 @@ class MemberSchema(Base):
     checkedStatus = relationship(
         "MemberCheckInOutSchema",
         back_populates="member",
-        order_by="MemberCheckInOutSchema.created_at.asc()",
+        order_by="MemberCheckInOutSchema.created_at.desc()",
         cascade="all, delete-orphan",
     )
     visitors = relationship(

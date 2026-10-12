@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
-from building.auth.user.employee.model import UserEmployeeModel, ModelLogin, UserEmployee
+from building.auth.user.employee.model import UserEmployeeModel, ModelLogin, UserEmployee, LoginTokenResponse
 from building.auth.user.employee.service import UserEmployeeService
 from utils.database import get_database
 
@@ -12,6 +12,6 @@ def get_service(database: Session = Depends(get_database)) -> UserEmployeeServic
     return UserEmployeeService(database)
 
 
-@employee_user_router.post('/login', response_model=UserEmployee, status_code=status.HTTP_200_OK)
-async def login(model: UserEmployeeModel, service: UserEmployeeService = Depends(get_service)) -> UserEmployee:
+@employee_user_router.post('/login', response_model=LoginTokenResponse, status_code=status.HTTP_200_OK)
+async def login(model: UserEmployeeModel, service: UserEmployeeService = Depends(get_service)) -> LoginTokenResponse:
     return service.get_user_login(model.username, model.password)

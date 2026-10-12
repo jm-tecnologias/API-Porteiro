@@ -8,7 +8,7 @@ class PermissionSchema(Base):
     id = Column("id", Integer, primary_key=True, index=True)
     module = Column("module", String(50), nullable=False)
     action = Column("action", String(50), nullable=False)
-    code = Column("code", String(20), nullable=False, unique=True)
+    code = Column("code", String(50), nullable=False, unique=True)
     status = Column("status", Boolean, default=True)
     created_at = Column("created_at", DateTime, nullable=False, default=datetime.now)
     updated_at = Column("updated_at", DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)

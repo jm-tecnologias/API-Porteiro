@@ -12,6 +12,7 @@ class VisitorModel(BaseModel):
     visitor_time: Optional[time]
     status: Optional[str] = None
     description: Optional[str] = None
+    barcode_url: Optional[str] = None
 
 
 class VisitorResponse(VisitorModel):

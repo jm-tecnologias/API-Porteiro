@@ -14,10 +14,18 @@ class VisitorDAO(BaseDAO[VisitorSchema]):
             model=VisitorSchema
         )
 
-    def find_visitor(self, visitor_id: int) -> T:
+    def find_visitor(self, token: str) -> T:
         stmt = (
             select(VisitorSchema, MemberSchema, ApartmentSchema)
             .join(MemberSchema, MemberSchema.id == VisitorSchema.member_id)
             .join(ApartmentSchema, MemberSchema.apartment_id == ApartmentSchema.id)
-            .where(VisitorSchema.id == visitor_id))
+            .where(VisitorSchema.token == token))
         return self.database.execute(stmt).one_or_none()
+
+    def list_all(self) -> list[T]:
+        stmt = (select(VisitorSchema, MemberSchema)
+                .join(MemberSchema, MemberSchema.id == VisitorSchema.member_id)
+                # .order_by(VisitorSchema.id.desc())
+                .order_by(VisitorSchema.updated_at.desc())
+                )
+        return list(self.database.execute(stmt).all())

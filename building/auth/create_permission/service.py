@@ -26,16 +26,22 @@ class PermissionService:
             self.dao.rollback()
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Was Not Possible To Add Data!')
 
+    def has_permission(self, user_id: int, permission_code: str) -> bool:
+        if self.dao.has_permission(user_id, permission_code):
+            return True
+        else:
+            return False
+
 # from utils.database import SessionLocal
 # from building.database import models
 # database = SessionLocal()
 # try:
 #     service = PermissionService(database)
 #     data = PermissionModel(
-#         module="USER",
+#         module="VISITOR_CHECK_IN_OUT",
 #         action="DELETE",
 #     )
 #     user = service.create(data)
-#
+#     print(service.has_permission(1, 'VISITOR_CHECK_IN_OUT:CREATE'))
 # finally:
 #     database.close()

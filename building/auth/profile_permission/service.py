@@ -32,7 +32,7 @@ class ProfilePermissionService:
 #     service = ProfilePermissionService(database)
 #     data = ProfilePermissionModel(
 #         profile_id=1,
-#         permission_id=1,
+#         permission_id=6,
 #     )
 #     service.create(data)
 #

@@ -18,19 +18,19 @@ class MemberService:
         self.dao = MemberDAO(database)
         self.auth_helper = AuthService(database=database, model=UserMemberDAO)
 
-    def update(self, member_id: int, member_data: MemberModel) -> MemberResponse:
-        member = self.dao.find_by_id(member_id)
-        if not member:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Member Not Found!')
-        data = member_data.model_dump(exclude_unset=True)
-        for field, value in data.items():
-            setattr(member, field, value)
-        try:
-            return self.dao.update(member)
-        except SQLAlchemyError:
-            self.dao.rollback()
-            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
-                                detail='Was Not Possible To Update Data!')
+    # def update(self, member_id: int, member_data: MemberModel) -> MemberResponse:
+    #     member = self.dao.find_by_id(member_id)
+    #     if not member:
+    #         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Member Not Found!')
+    #     data = member_data.model_dump(exclude_unset=True)
+    #     for field, value in data.items():
+    #         setattr(member, field, value)
+    #     try:
+    #         return self.dao.update(member)
+    #     except SQLAlchemyError:
+    #         self.dao.rollback()
+    #         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+    #                             detail='Was Not Possible To Update Data!')
 
     def populate_dashboard(self, user_id: str, url_req: str) -> DashboardResponse:
         logged_user = self.auth_helper.verify_token(user_id)
@@ -93,7 +93,9 @@ class MemberService:
         )
 
     def update_by_logged_client(self, token: str, member_data: MemberModel) -> MemberResponse:
-        user = self.user_member_service.verify_token(token)
+        user = self.auth_helper.verify_token(token)
+        if not user:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Parent Not Found!")
 
         member = self.dao.find_by_id(user.member_id)
         if not member:

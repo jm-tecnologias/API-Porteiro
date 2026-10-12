@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, Request
 from sqlalchemy.orm import Session
 from building.client.member.MemberApartmentResponse import MemberApartmentResponse
 from building.client.member.model import MemberResponse, MemberModel
@@ -25,6 +25,7 @@ async def update(member_id: int, model: MemberModel, service: MemberService = De
 # ==============================
 # get member for portaria
 # ==============================
-@admin_member_router.get('/get/{member_id}', response_model=MemberApartmentResponse, status_code=status.HTTP_200_OK)
-async def get_member(member_id: int, service: MemberService = Depends(get_service)) -> MemberApartmentResponse:
-    return service.scan_member(member_id)
+@admin_member_router.get('/get/{token}', response_model=MemberApartmentResponse, status_code=status.HTTP_200_OK)
+async def get_member(token: str, req: Request,
+                     service: MemberService = Depends(get_service)) -> MemberApartmentResponse:
+    return service.scan_member(token, str(req.base_url))

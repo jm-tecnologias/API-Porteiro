@@ -44,15 +44,15 @@ class ProfileService:
 # try:
 #     service = ProfileService(database)
 #     data = ProfileModel(
-#         profile="Recepcionist",
-#         description="Recepcionista do Edificio",
+#         profile="RECEPTIONIST",
+#         description="Secretaria de acesso ao Edificio",
 #         status=True
 #     )
 #     user = service.create(data)
 #
-#     clients = service.list_all()
-#     for client in clients:
-#         print(client.description)
-#     service.update(4, data)
+    # clients = service.list_all()
+    # for client in clients:
+    #     print(client.description)
+    # service.update(4, data)
 # finally:
 #     database.close()

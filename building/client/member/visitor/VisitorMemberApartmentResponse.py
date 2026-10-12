@@ -9,3 +9,8 @@ class VisitorMemberApartmentResponse(BaseModel):
     visitor: VisitorResponse
     member: MemberResponse
     apartment: ApartmentResponse
+
+
+class VisitorMemberResponse(BaseModel):
+    visitor: VisitorResponse
+    member: MemberResponse
